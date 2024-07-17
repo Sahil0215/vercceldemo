@@ -1,121 +1,3 @@
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instabill</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #000;
-            border-radius: 10px;
-        }
-        .sidebar {
-            flex: 1;
-            margin-right: 20px;
-        }
-        .sidebar button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #000;
-            border-radius: 5px;
-            background-color: #f1f1f1;
-            cursor: pointer;
-        }
-        .sidebar button.active {
-            background-color: #d1e7fd;
-        }
-        .content {
-            flex: 4;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-        .content div {
-            width: 30%;
-            margin: 10px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #000;
-            border-radius: 10px;
-            background-color: #d1e7fd;
-        }
-        .header, .footer {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .header h1, .header a {
-            margin: 0;
-        }
-        .header a {
-            text-decoration: none;
-            color: #000;
-            padding: 10px 20px;
-            border: 1px solid #000;
-            border-radius: 5px;
-            background-color: #f1f1f1;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>INSTABILL</h1>
-        <a href="{% url 'logout_page' %}">LOGOUT</a>
-    </div>
-    <div class="container">
-        <div class="sidebar">
-            <a href="{% url 'home' %}"><button class="active">HOME</button></a>
-            <a href="{% url 'manage' %}"><button>MANAGE</button></a>
-            <a href="{% url 'generate' %}"><button>GENERATE</button></a>
-            <a href="{% url 'view' %}"><button>VIEW/PRINT</button></a>
-            <a href="{% url 'entry' %}"><button>ENTRY</button></a>
-        </div>
-        <div class="content">
-            <a href="{%url 'deleteallusers'%}">
-            <div>
-                <h2>DELETE ALL USERS</h2>
-                <p>10</p>
-            </div>
-        </a>
-            <div>
-                <h2>NO. OF BENEFICIARY</h2>
-                <p>15</p>
-            </div>
-            <div>
-                <h2>NO. OF BENEFICIARY</h2>
-                <p>15</p>
-            </div>
-            <div>
-                <h2>NO OF ITEMS</h2>
-                <p>10</p>
-            </div>
-            <div>
-                <h2>BRANCHES</h2>
-                <p>15</p>
-            </div>
-            <div>
-                <h2>EMPLOYEE</h2>
-                <p>15</p>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-
-<!-- 
 <!doctype html>
 <html lang="en">
 <head>
@@ -149,7 +31,8 @@
         <a href="{% url 'main' %}" class="logo m-0 float-left">InstaBill<span class="text-primary">.</span></a>
 
         <ul class="js-clone-nav d-none mt-1 d-lg-inline-block site-menu float-right">
-          <li class="cta-primary"><a href="{% url 'logout_page' %}">Log Out</a></li>
+          <li class="cta-button-outline"><a href="{% url 'login_page' %}">Sign in</a></li>
+          <li class="cta-primary"><a href="{% url 'register' %}">Register</a></li>
         </ul>
 
 
@@ -162,14 +45,56 @@
   </nav>
   
 
-  
- 
+  <div class="untree_co-hero pb-0" id="home-section">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12">
+          <div class="dots"></div>
+          <div class="row justify-content-center">
+            <div class="col-md-7 text-center mb-5">
+              <h1 class="heading" data-aos="fade-up" data-aos-delay="0">Effortless Management of your BUSINESS <span class="d-block"> by using <a href="{% url 'main' %}">InstaBill</a></span></h1>
+            </div>
+          </div>
+          <div class="row align-items-center">
+
+            <div class="col-lg-4">
+              <div class="intro">
+
+                <div class="excerpt"data-aos="fade-up" data-aos-delay="100">
+                  <span class="caption">Welcome to InstaBill</span>
+                  <h2 class="font-weight-bold">Explore The Platform</h2>
+                  <p>Say goodbye to paperwork and experience seamless business management from anywhere, on any device. With our intuitive app, managing your business has never been easier or more efficient.</p>  
+                </div>
+                <p data-aos="fade-up"  data-aos-delay="200">
+                  <a href="{% url 'register' %}" class="btn btn-primary smoothscroll mr-1">Become  Member</a>
+                  <a href="{% url 'login_page' %}" class="btn btn-outline-primary smoothscroll">Already a Member</a>
+                </p>
+              </div>
+              
+            </div>
+            <div class="col-lg-8">
+              <div class="illustration">
+                <img src="{% static 'images/graphs-statistics_outline.svg' %}" alt="Image" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- FEATURES -->
   <div class="untree_co-section">
     <div class="container">
 
       <div class="row mb-5">
         <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-          <h2 class="heading">Welcome , {{request.user}}</h2>
+          <span class="caption">Features</span>
+          <h2 class="heading">Advantage of using our Service</h2>
         </div>
       </div>
 
@@ -185,9 +110,11 @@
               </svg>
             </div>
             <div class="service-contents">
-              <h3>Manage</h3>
-            </div> 
-          </div> 
+              <h3>1. Invoice Generator</h3>
+              <p>Create customizable invoice templates with auto-calculation of totals, taxes, and discounts.</p>  
+              
+            </div> <!-- /.service-contents-->
+          </div> <!-- /.service -->
         </div>
         
         
@@ -198,12 +125,12 @@
                 <path fill-rule="evenodd" d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"/>
                 <path fill-rule="evenodd" d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"/>
               </svg>
-            </div> 
+            </div> <!-- /.icon -->
             <div class="service-contents">
               <h3>2. Stock Management</h3>
               <p>Efficient items stock management is crucial for maintaining optimal inventory levels and minimizing stockouts.</p>
-            </div> 
-          </div> 
+            </div> <!-- /.service-contents-->
+          </div> <!-- /.service -->
         </div>
         
         
@@ -214,7 +141,7 @@
                 <path fill-rule="evenodd" d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6h-1v6a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-6H0v6z"/>
                 <path fill-rule="evenodd" d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5v2.384l-7.614 2.03a1.5 1.5 0 0 1-.772 0L0 6.884V4.5zM1.5 4a.5.5 0 0 0-.5.5v1.616l6.871 1.832a.5.5 0 0 0 .258 0L15 6.116V4.5a.5.5 0 0 0-.5-.5h-13zM5 2.5A1.5 1.5 0 0 1 6.5 1h3A1.5 1.5 0 0 1 11 2.5V3h-1v-.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5V3H5v-.5z"/>
               </svg>
-            </div> 
+            </div> <!-- /.icon -->
             <div class="service-contents">
               <h3>3. Finance and Capital Management</h3>
               <p>Streamline your operations and maximize profitability with robust financial management solutions tailored to optimize budgeting, cash flow, investments, and many more.</p>  
@@ -228,9 +155,16 @@
 
     </div>
   </div>
+  
+  <div class="container">
+    <div class="card">Card 1</div>
+    <div class="card">Card 2</div>
+    <div class="card">Card 3</div>
+  </div>
+
       <div class="row mt-5">
         <div class="col-12 text-center">
-          <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by Sahil Bharadwaj</a> 
+          <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="{% url 'main' %}">Untree.co</a> 
           </p>
         </div>
       </div>
@@ -259,4 +193,4 @@
   
 </body>
 
-</html> -->
+</html>

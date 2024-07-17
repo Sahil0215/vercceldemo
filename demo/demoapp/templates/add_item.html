@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create ITEM</title>
+</head>
+<body>
+    <h1>Create ITEM</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+       
+
+        <label for="name"> Item Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="tax">TAX:</label>
+        <input type="text" id="tax" name="tax" required><br>
+
+        <label for="hsn">HSN Code:</label>
+        <input type="text" id="hsn" name="hsn"><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
