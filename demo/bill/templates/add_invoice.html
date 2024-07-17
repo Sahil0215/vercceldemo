@@ -3,61 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>invoice Form</title>
+    <title>Bill Form</title>
 </head>
 <body>
+    <h1>Generate Invoice</h1>
     <form method="post">
         {% csrf_token %}
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br><br>
         
-        <label for="invoice_from">From (Seller):</label>
-        <select id="invoice_from" name="invoice_from" onchange="checkAddOption(this)">
+        
+        <label>From:</label>
+        <select name="invoice_from" onchange="checkAddOption(this)">
             {% for s in sellers %}
             <option value="{{ s.id }}">{{ s.name}}</option>
             {% endfor %}
             <option value="add_seller">Add Seller</option>
-        </select><br><br>
+        </select>
         
-        <label for="invoice_to">To (Buyer):</label>
-        <select id="invoice_to" name="invoice_to" onchange="checkAddOption(this)">
+        
+        
+        <label>To:</label>
+        <select name="invoice_to" onchange="checkAddOption(this)">
             {% for b in buyers %}
-            <option value="{{ b.id }}">{{ b.name }}</option>
+            <option value="{{ b.id }}">{{ b.name}}</option>
             {% endfor %}
             <option value="add_buyer">Add Buyer</option>
-        </select><br><br>
-        
-        <label for="receiver_same_as_buyer">Is the receiver the same as the buyer?</label>
-        <input type="checkbox" id="receiver_same_as_buyer" name="receiver_same_as_buyer" checked onclick="toggleReceiver()"><br><br>
-        
-        <div id="receiver_div" style="display: none;">
-            <label for="receiver">Receiver:</label>
-            <select id="to" name="to" onchange="checkAddOption(this)">
-                {% for b in buyers %}
-                <option value="{{ b.id }}">{{ b.name }}</option>
-                {% endfor %}
-                <option value="add_buyer">Add Buyer</option>
-            </select><br><br>
-        </div>
-        
-        <label for="transport">Transport:</label>
-        <input type="text" id="transport" name="transport" required><br><br>
+        </select>
 
-        <label for="vehicle_no">Vehicle No:</label>
-        <input type="text" id="vehicle_no" name="vehicle_no" required><br><br>
+
+        <label>Date: </label>
+        <input type="date" name="date">
+
         
-        <label for="eway">E-way invoice No:</label>
-        <input type="text" id="eway" name="eway" required><br><br>
+        <label>E-Way Bill No. (if any):  </label>
+        <input type="text" name="eway">
         
-        <label for="no_of_items">Number of Items:</label>
-        <input type="number" id="no_of_items" name="no_of_items" required oninput="showItemBlocks()"><br><br>
+
+        <label>Transport :  </label>
+        <input type="text" name="transport">
         
-        <label for="discount">Discount:</label>
-        <input type="number" id="discount" name="discount" value="0" required><br><br>
+
+        <label>Vehicle No :  </label>
+        <input type="text" name="vehicle_no">
+        
+        
+        <label>Number Of Items to be Billed :  </label>
+        <input type="number" name="no_of_items">
+
+
+        <label>Number Of Items to be Billed :  </label>
+        <input type="number" id="no_of_items" name="no_of_items">
+
+        
+        <label>Other Charges:  </label>
+        <input type="number" name="other_charges">
+
+        
+        <label>Discount:  </label>
+        <input type="number" name="discount">
+
+        
+        <label>:  </label>
+        <input type="number" name="other_charges">
         
         <div id="items_container"></div>
         
-        <button type="submit">Generate invoice</button>
+        <button type="submit">Generate Bill</button>
     </form>
 
     <script>
@@ -76,8 +86,8 @@
                 const itemDiv = document.createElement('div');
                 itemDiv.innerHTML = `
                     <h3>Item ${i}</h3>
-                    <label for="item_details_${i}">Item Name:</label>
-                    <select id="item_details_${i}" name="item_details_${i}" onchange="checkAddOption(this)">
+                    <label for="item_name">Item Name:</label>
+                    <select id="item_name" name="item_name" onchange="checkAddOption(this)">
                         {% for i in items %}
                         <option value="{{ i.name }}">{{ i.name }}</option>
                         {% endfor %}

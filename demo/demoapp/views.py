@@ -454,142 +454,83 @@ def delete_invoice(request, invoice_id):
     return render(request, 'manage_invoice.html', {'invoice': invoice})
 
 
-# def add_invoice(request):
-#     if request.method == "POST":
-#         date = request.POST.get('date')
-#         invoice_from_id = request.POST.get('invoice_from')
-#         invoice_from = get_object_or_404(seller, id=invoice_from_id)
-#         invoice_to_id = request.POST.get('invoice_to')
-#         transport=request.POST.get('transport')
-#         invoice_to = get_object_or_404(buyer, id=invoice_to_id)
-#         no_of_items = request.POST.get('no_of_items')
-#         count=1
-#         for i in  no_of_items:
-#             item_details_id=int(request.POST.get('item_details_'+str(count)))
-#             quantity_f=request.POST.get('quantity_'+str(count))
-#             rate_f=request.POST.get('rate_'+str(count))
-#             count= count+1
-#             item_details_f=get_object_or_404(item, id=item_details_id)
-#             billed_item_o=billedItem(
-#                 item_details=item_details_f,
-#                 quantity=quantity_f,
-#                 rate=rate_f,
-#                 total=int(quantity_f)*int(rate_f)
-#             )
-#             billed_item_o.save()
-#             billed_items=billed_item_o
-#         discount= request.POST.get('discount') 
-#         eway = request.POST.get('eway')
-#         vehicle_no = request.POST.get('vehicle_no')
-#         grand_total = request.POST.get('grand_total')
-
-
-#             # Generate the invoice number
-#         invoice_no = invoice_from.invoice_count + 1
-
-#             # Create the invoice object
-#         invoice_object = invoice(
-#                 invoice_no=invoice_no,
-#                 date=date,
-#                 invoice_from=invoice_from,
-#                 invoice_to=invoice_to,
-#                 no_of_items=no_of_items,
-#                 billed_items=billed_items,
-#                 eway=eway,
-#                 transport=transport,
-#                 vehicle_no=vehicle_no,
-#                 grand_total=grand_total,
-#                 discount=discount
-#             )
-
-#             # Save the invoice object
-#         invoice_object.save()
-
-#             # Update the invoice count for the seller
-#         invoice_from.invoice_count += 1
-#         invoice_from.save()
-
-#         return redirect('/manage_invoice/')
-#     else:
-#         sellers = seller.objects.all()
-#         buyers = buyer.objects.all()
-#         items = item.objects.all()
-#         return render(request, 'add_invoice.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
-
-
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.db import transaction
-
 @login_required(login_url="/login_page/")
-@csrf_exempt
 def add_invoice(request):
-    if request.method == 'POST':
-        date = request.POST.get('date')
-        seller_id = request.POST.get('seller')
-        buyer_id = request.POST.get('buyer')
-        transport = request.POST.get('transport')
-        vehicle_no = request.POST.get('vehicle_no')
-        eway = request.POST.get('e_way')
-        num_items = int(request.POST.get('num_items'))
-        discount = int(request.POST.get('dis'))
+    if request.method == "POST":
+
+        invoice_from_id=request.POST.get('invoice_from')
+        invoice_to_id=request.POST.get('invoice_to')
+        date=request.POST.get('date')
+        eway=request.POST.get('eway')
+        transport=request.POST.get('transport')
+        vehicle_no=request.POST.get('vechicle_no')
+        no_of_items=int(request.POST.get('no_of_items'))
+        other_charges=request.POST.get('other_charges')
+        discount=request.POST.get('discount')
+
+        invoice_from=seller.objects.get(id=invoice_from_id)
+        invoice_to=buyer.objects.get(id=invoice_to_id)
         
-        try:
-            with transaction.atomic():
-                bill_from = seller.objects.get(id=seller_id)
-                bill_to = buyer.objects.get(id=buyer_id)
-                grand_total = 0
+        invoice_from.bill_count=invoice_from.bill_count+1
+        invoice_no=invoice_from.bill_count
 
-                invoice_instance = invoice.objects.create(
-                    date=date,
-                    bill_from=bill_from,
-                    bill_to=bill_to,
-                    transport=transport,
-                    vehicle_no=vehicle_no,
-                    eway=eway,
-                    no_of_items=num_items,
-                    discount=discount,
-                    grand_total=0,  # Will update later
-                )
+        taxable_amt,avg_sgst,avg_cgst=0,0,0
 
-                for i in range(num_items):
-                    item_id = request.POST.get(f'item_{i}')
-                    item_rate = int(request.POST.get(f'item_rate_{i}'))
-                    item_quantity = int(request.POST.get(f'item_quantity_{i}'))
-                    
-                    item_instance = item.objects.get(id=item_id)
-                    total_price = item_rate * item_quantity
+        invoice_items =[]
+        for i in range(1,no_of_items+1):
+            item_details_id=request.POST.get('item'+i)
+            item_details=item.objects.get(id=item_details_id)
+            quantity=int(request.POST.get('quantity'+i))
+            rate=int(request.POST.get('rate'+i))
+            amount=quantity*rate
+            taxable_amt+=amount
+            avg_sgst+=item_details.sgst
+            avg_cgst+=item_details.cgst
 
-                    billed_item_instance = billedItem.objects.create(
-                        item_details=item_instance,
-                        quantity=item_quantity,
-                        rate=item_rate,
-                        total=total_price,
-                    )
+            billedItem_object = billedItem(
+                item_details=item_details,
+                quantity=quantity,
+                rate=rate,
+                amount=amount
+            )
+            billedItem_object.save()
+            invoice_items.append(billedItem_object)
 
-                    invoice_instance.billed_items.add(billed_item_instance)
-                    grand_total += total_price
 
-                grand_total -= discount
-                invoice_instance.grand_total = grand_total
-                invoice_instance.save()
+        sgst_amt=(taxable_amt*(avg_sgst/no_of_items))/100
+        cgst_amt=(taxable_amt*(avg_cgst/no_of_items))/100
+        tgst_amt=sgst_amt+cgst_amt
+        grand_total=taxable_amt+tgst_amt
 
-                return redirect('manage_invoice')
 
-        except Exception as e:
-            return HttpResponse(f"Error: {e}")
+        invoice_obj=invoice(
+            invoice_from=invoice_from,
+            invoice_no=invoice_no,
+            date=date,
+            eway=eway,
+            transport=transport,
+            vehicle_no=vehicle_no,
+            invoice_to=invoice_to,
+            no_of_items=no_of_items,
+            invoice_items=invoice_items,
+            other_charges=other_charges,
+            discount=discount,
+            taxable_amt=taxable_amt,
+            sgst_amt=sgst_amt,
+            cgst_amt=cgst_amt,
+            tgst_amt=tgst_amt,
+            grand_total=grand_total
+        )
+        invoice_obj.save()
+        return redirect("/manage_invoice/")
+    else:
+        return render(request, "add_invoice.html")
+    
 
-    sellers = seller.objects.all()
-    buyers = buyer.objects.all()
-    items = item.objects.all()
+    
 
-    context = {
-        'sellers': sellers,
-        'buyers': buyers,
-        'items': items,
-    }
 
-    return render(request, 'generate_bill.html', context)
+
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
