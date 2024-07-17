@@ -121,7 +121,7 @@
             <td>{{ invoice.invoice_from }}</td>
             <td>{{ invoice.invoice_to }}</td>
             <td>
-                {% for i in invoice.billedItems %}
+                {% for i in invoice.billedItems.all %}
                         {{i.name}},
                 {% endfor %}
             </td>
