@@ -78,14 +78,15 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'verceldb',
-        'USER': 'default',
-        'PASSWORD': 'lxGjySmcW19Q',
-        'HOST': 'ep-bitter-breeze-a4cbpjyq-pooler.us-east-1.aws.neon.tech',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'PxNWuMKLQtXpMBUzzavejOSmwznsXgQI',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '27841',
     }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
