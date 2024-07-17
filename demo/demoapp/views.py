@@ -516,66 +516,80 @@ def delete_invoice(request, invoice_id):
 #         items = item.objects.all()
 #         return render(request, 'add_invoice.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
 
-import json
+
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.db import transaction
+
+@login_required(login_url="/login_page/")
+@csrf_exempt
 def add_invoice(request):
     if request.method == 'POST':
-        # Invoice details
-        date = request.POST['date']
-        bill_no = request.POST['bill_no']
-        bill_from_id = request.POST['bill_from']
-        bill_to_id = request.POST['bill_to']
-        transport = request.POST['transport']
-        no_of_items = int(request.POST['no_of_items'])
-        eway = request.POST['eway']
-        vehicle_no = request.POST['vehicle_no']
-        discount = request.POST['discount']
-        grand_total = request.POST['grand_total']
+        date = request.POST.get('date')
+        seller_id = request.POST.get('seller')
+        buyer_id = request.POST.get('buyer')
+        transport = request.POST.get('transport')
+        vehicle_no = request.POST.get('vehicle_no')
+        eway = request.POST.get('e_way')
+        num_items = int(request.POST.get('num_items'))
+        discount = int(request.POST.get('dis'))
+        
+        try:
+            with transaction.atomic():
+                bill_from = seller.objects.get(id=seller_id)
+                bill_to = buyer.objects.get(id=buyer_id)
+                grand_total = 0
 
-        bill_from = seller.objects.get(id=bill_from_id)
-        bill_to = buyer.objects.get(id=bill_to_id)
+                invoice_instance = invoice.objects.create(
+                    date=date,
+                    bill_from=bill_from,
+                    bill_to=bill_to,
+                    transport=transport,
+                    vehicle_no=vehicle_no,
+                    eway=eway,
+                    no_of_items=num_items,
+                    discount=discount,
+                    grand_total=0,  # Will update later
+                )
 
-        new_invoice = invoice(
-            date=date,
-            bill_no=bill_no,
-            bill_from=bill_from,
-            bill_to=bill_to,
-            transport=transport,
-            no_of_items=no_of_items,
-            eway=eway,
-            vehicle_no=vehicle_no,
-            discount=discount,
-            grand_total=grand_total,
-        )
-        new_invoice.save()
+                for i in range(num_items):
+                    item_id = request.POST.get(f'item_{i}')
+                    item_rate = int(request.POST.get(f'item_rate_{i}'))
+                    item_quantity = int(request.POST.get(f'item_quantity_{i}'))
+                    
+                    item_instance = item.objects.get(id=item_id)
+                    total_price = item_rate * item_quantity
 
-        for i in range(no_of_items):
-            item_id = request.POST[f'item_{i}']
-            quantity = int(request.POST[f'quantity_{i}'])
-            rate = int(request.POST[f'rate_{i}'])
-            total = quantity * rate
+                    billed_item_instance = billedItem.objects.create(
+                        item_details=item_instance,
+                        quantity=item_quantity,
+                        rate=item_rate,
+                        total=total_price,
+                    )
 
-            billed_item = billedItem(
-                item_details=item.objects.get(id=item_id),
-                quantity=quantity,
-                rate=rate,
-                total=total,
-            )
-            billed_item.save()
-            new_invoice.billed_items.add(billed_item)
+                    invoice_instance.billed_items.add(billed_item_instance)
+                    grand_total += total_price
 
-        return redirect('manage_invoice')  # Redirect to a list of invoices or wherever you need
+                grand_total -= discount
+                invoice_instance.grand_total = grand_total
+                invoice_instance.save()
 
-    else:
-        buyers = buyer.objects.all()
-        sellers = seller.objects.all()
-        items = item.objects.all()
-        items_json = json.dumps(list(items.values('id', 'name')))
-        return render(request, 'create_invoice.html', {
-            'buyers': buyers,
-            'sellers': sellers,
-            'items': items,
-            'items_json': items_json,
-        })
+                return redirect('invoice_detail', invoice_id=invoice_instance.id)
+
+        except Exception as e:
+            return HttpResponse(f"Error: {e}")
+
+    sellers = seller.objects.all()
+    buyers = buyer.objects.all()
+    items = item.objects.all()
+
+    context = {
+        'sellers': sellers,
+        'buyers': buyers,
+        'items': items,
+    }
+
+    return render(request, 'generate_bill.html', context)
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
