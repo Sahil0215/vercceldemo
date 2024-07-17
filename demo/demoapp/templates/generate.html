@@ -109,7 +109,7 @@
         <select name="seller" id="seller" required>
             <!-- <option value="#" selected>Select Seller</option> -->
             {% for s in sellers %}
-            <option value="{{ s.id }}">{{ s.seller_name }}</option>
+            <option value="{{ s.id }}">{{ s.name }}</option>
             {% endfor %}
             <option value="add_Seller">Add Seller</option>
         </select><br>
@@ -118,21 +118,21 @@
         <select name="buyer" id="buyer" required>
             <!-- <option value="#" selected>Select Buyer</option> -->
             {% for b in buyers %}
-            <option value="{{ b.id }}">{{ b.buyer_name }}</option>
+            <option value="{{ b.id }}">{{ b.name }}</option>
             {% endfor %}
         </select><br>
 
         <label for="same_receiver">Is the receiver the same as the buyer?</label>
         <input type="checkbox" id="same_receiver" name="same_receiver" onclick="toggleReceiver()" checked><br> 
         
-        <div id="receiver_div" style="display: none;">
+        <!-- <div id="receiver_div" style="display: none;">
             <label for="receiver">Receiver:</label>
             <select name="receiver" id="receiver">
                 {% for b in buyers %}
                 <option value="{{ b.id }}">{{ b.buyer_name }}</option>
                 {% endfor %}
             </select><br>
-        </div>
+        </div> -->
 
         <label for="transport">Transport:</label>
         <input type="text" name="transport" id="transport"><br>
@@ -152,7 +152,7 @@
         <label for="item_options">Item Options:</label>
         <select id="item_options" style="display: none;">
             {% for item in items %}
-            <option value="{{ item.id }}">{{ item.item_name }}</option>
+            <option value="{{ item.id }}">{{ item.name }}</option>
             {% endfor %}
         </select><br>
 
