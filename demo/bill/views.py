@@ -478,10 +478,10 @@ def add_invoice(request):
 
         invoice_items =[]
         for i in range(1,no_of_items+1):
-            item_details_id=request.POST.get('item'+i)
+            item_details_id=request.POST.get('item'+str(i))
             item_details=item.objects.get(id=item_details_id)
-            quantity=int(request.POST.get('quantity'+i))
-            rate=int(request.POST.get('rate'+i))
+            quantity=int(request.POST.get('quantity'+str(i)))
+            rate=int(request.POST.get('rate'+str(i)))
             amount=quantity*rate
             taxable_amt+=amount
             avg_sgst+=item_details.sgst

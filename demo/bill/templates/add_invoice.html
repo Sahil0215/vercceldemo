@@ -50,9 +50,7 @@
         <label>Number Of Items to be Billed :  </label>
         <input type="number" name="no_of_items"><br>
 
-        <div id="items_container"></div><br>
-        
-
+        <div id="fieldsContainer"></div>
 
         <label>Other Charges:  </label>
         <input type="number" name="other_charges"><br>
@@ -73,38 +71,32 @@
             receiverDiv.style.display = receiverCheckbox.checked ? 'none' : 'block';
         }
 
-        function showItemBlocks() {
-            const numItems = document.getElementById('no_of_items').value;
-            const itemsContainer = document.getElementById('items_container');
-            itemsContainer.innerHTML = '';
+        function generateFields() {
 
-            for (let i = 1; i <= numItems; i++) {
-                const itemDiv = document.createElement('div');
-                itemDiv.innerHTML = `
-                    <h3>Item ${i}</h3>
-                    <label for="item_name">Item Name:</label>
-                    <select id="item_name" name="item_name" onchange="checkAddOption(this)">
+            const numberOfFields = document.getElementById('no_of_items').value;
+            const container = document.getElementById('fieldsContainer');
+            let fieldsHTML = '';
+            for (let i = 1; i <= numberOfFields; i++) {
+                fieldsHTML += `
+                     <label>Item ${i}</label>
+                    <select name="item${i}" onchange="checkAddOption(this)">
                         {% for i in items %}
-                        <option value="{{ i.name }}">{{ i.name }}</option>
+                            <option value="{{ i.id }}">{{ i.name}}</option>
                         {% endfor %}
-                        <option value="add_item">Add Item</option>
-                    </select><br><br>
+                    <option value="add_item">Add Buyer</option>
+                    </select>
+                    
+                    <label>Rate: </label>
+                    <input type="number" name="rate${i}">
 
-                    <label for="rate_${i}">Rate:</label>
-                    <input type="number" id="rate_${i}" name="rate_${i}" required><br><br>
-
-                    <label for="unit_${i}">Unit:</label>
-                    <select id="unit_${i}" name="unit_${i}">
-                        <option value="kg">kg</option>
-                        <option value="litre">litre</option>
-                        <option value="piece">piece</option>
-                    </select><br><br>
-
-                    <label for="quantity_${i}">Quantity:</label>
-                    <input type="number" id="quantity_${i}" name="quantity_${i}" required><br><br>
+        
+                    <label>Quantity:</label>
+                    <input type="number" name="quantity${i}"><br>
                 `;
-                itemsContainer.appendChild(itemDiv);
             }
+
+            // Set the innerHTML of the container
+            container.innerHTML = fieldsHTML;
         }
 
         function checkAddOption(selectElement) {
