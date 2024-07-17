@@ -462,7 +462,7 @@ def add_invoice(request):
         date=request.POST.get('date')
         eway=request.POST.get('eway')
         transport=request.POST.get('transport')
-        vehicle_no=request.POST.get('vechicle_no')
+        vehicle_no=request.POST.get('vehicle_no')
         no_of_items=int(request.POST.get('no_of_items'))
         other_charges=request.POST.get('other_charges')
         discount=request.POST.get('discount')
@@ -512,7 +512,6 @@ def add_invoice(request):
             vehicle_no=vehicle_no,
             invoice_to=invoice_to,
             no_of_items=no_of_items,
-            invoice_items=invoice_items_arr,
             other_charges=other_charges,
             discount=discount,
             taxable_amt=taxable_amt,
