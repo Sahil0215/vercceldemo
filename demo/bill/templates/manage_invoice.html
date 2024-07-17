@@ -107,21 +107,25 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <td>Emp. ID</td>
-                            <td>Name</td>
-                            <td>Phone</td>
-                            <td>Address</td>
-                            <td>Aadhaar No. </td>
+                            <td>DATE</td>
+                            <td>FROM</td>
+                            <td>TO</td>
+                            <td>ITEMS</td>
+                            <td>GRAND TOTAL </td>
                             <td>Action</td>
                         </tr>
                     </thead>
                     {% for invoice in invoices %}
         <tr>
-            <td>{{ invoice.empid }}</td>
-            <td>{{ invoice.name }}</td>
-            <td>{{ invoice.phone }}</td>
-            <td>{{ invoice.city }} , {{ invoice.state }}</td>
-            <td>{{ invoice.aadhaar }}</td>
+            <td>{{ invoice.date }}</td>
+            <td>{{ invoice.invoice_from }}</td>
+            <td>{{ invoice.invoice_to }}</td>
+            <td>
+                {% for i in invoice.billedItems %}
+                        {{i.name}},
+                {% endfor %}
+            </td>
+            <td>{{ invoice.grand_total }}</td>
             <td>
                 <form action="{% url 'delete_invoice' invoice.id %}" method="POST">
                     {% csrf_token %}
