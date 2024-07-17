@@ -78,10 +78,24 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'verceldb',
+        'USER': 'default',
+        'PASSWORD': 'lxGjySmcW19Q',
+        'HOST': 'ep-bitter-breeze-a4cbpjyq-pooler.us-east-1.aws.neon.tech',
+        'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres-demo',
+#         'USER': 'default',
+#         'PASSWORD': 'lxGjySmcW19Q',
+#         'HOST': 'ep-bitter-breeze-a4cbpjyq-pooler.us-east-1.aws.neon.tech',
+#         'PORT': 'PORT_NUMBER',
+#     }
+# }
 
 
 # Password validation
