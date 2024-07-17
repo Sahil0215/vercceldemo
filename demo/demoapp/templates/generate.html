@@ -2,114 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bill Form</title>
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br><br>
-        
-        <label for="bill_from">From (Seller):</label>
-        <select id="bill_from" name="bill_from" onchange="checkAddOption(this)">
-            {% for s in sellers %}
-            <option value="{{ s.id }}">{{ s.name}}</option>
-            {% endfor %}
-            <option value="add_seller">Add Seller</option>
-        </select><br><br>
-        
-        <label for="bill_to">To (Buyer):</label>
-        <select id="bill_to" name="bill_to" onchange="checkAddOption(this)">
-            {% for b in buyers %}
-            <option value="{{ b.id }}">{{ b.name }}</option>
-            {% endfor %}
-            <option value="add_buyer">Add Buyer</option>
-        </select><br><br>
-        
-        <label for="receiver_same_as_buyer">Is the receiver the same as the buyer?</label>
-        <input type="checkbox" id="receiver_same_as_buyer" name="receiver_same_as_buyer" checked onclick="toggleReceiver()"><br><br>
-        
-        <div id="receiver_div" style="display: none;">
-            <label for="receiver">Receiver:</label>
-            <select id="to" name="to" onchange="checkAddOption(this)">
-                {% for b in buyers %}
-                <option value="{{ b.id }}">{{ b.name }}</option>
-                {% endfor %}
-                <option value="add_buyer">Add Buyer</option>
-            </select><br><br>
-        </div>
-        
-        <label for="transport">Transport:</label>
-        <input type="text" id="transport" name="transport" required><br><br>
-        
-        <label for="vehicle_no">Vehicle No:</label>
-        <input type="text" id="vehicle_no" name="vehicle_no" required><br><br>
-        
-        <label for="eway_bill_no">E-way Bill No:</label>
-        <input type="text" id="eway_bill_no" name="eway_bill_no" required><br><br>
-        
-        <label for="num_items">Number of Items:</label>
-        <input type="number" id="num_items" name="num_items" required oninput="showItemBlocks()"><br><br>
-        
-        <label for="discount">Discount:</label>
-        <input type="number" id="discount" name="discount" value="0" required><br><br>
-        
-        <div id="items_container"></div>
-        
-        <button type="submit">Generate Bill</button>
-    </form>
-
+    <title>Create Invoice</title>
     <script>
-        function toggleReceiver() {
-            const receiverCheckbox = document.getElementById('receiver_same_as_buyer');
-            const receiverDiv = document.getElementById('receiver_div');
-            receiverDiv.style.display = receiverCheckbox.checked ? 'none' : 'block';
-        }
+        function generateItemFields() {
+            const container = document.getElementById('itemFields');
+            const numberOfItems = document.getElementById('no_of_items').value;
+            container.innerHTML = ''; // Clear existing fields
 
-        function showItemBlocks() {
-            const numItems = document.getElementById('num_items').value;
-            const itemsContainer = document.getElementById('items_container');
-            itemsContainer.innerHTML = '';
+            for (let i = 0; i < numberOfItems; i++) {
+                // Create quantity input
+                let quantityLabel = document.createElement('label');
+                quantityLabel.innerHTML = `Quantity ${i + 1}: `;
+                container.appendChild(quantityLabel);
 
-            for (let i = 1; i <= numItems; i++) {
-                const itemDiv = document.createElement('div');
-                itemDiv.innerHTML = `
-                    <h3>Item ${i}</h3>
-                    <label for="item_name">Item Name:</label>
-                    <select id="item_name" name="item_name" onchange="checkAddOption(this)">
-                        {% for i in items %}
-                        <option value="{{ i.name }}">{{ i.name }}</option>
-                        {% endfor %}
-                        <option value="add_item">Add Item</option>
-                    </select><br><br>
+                let quantityInput = document.createElement('input');
+                quantityInput.type = 'number';
+                quantityInput.name = `quantity_${i}`;
+                quantityInput.required = true;
+                container.appendChild(quantityInput);
 
-                    <label for="rate_${i}">Rate:</label>
-                    <input type="number" id="rate_${i}" name="rate_${i}" required><br><br>
+                // Create rate input
+                let rateLabel = document.createElement('label');
+                rateLabel.innerHTML = ` Rate ${i + 1}: `;
+                container.appendChild(rateLabel);
 
-                    <label for="unit_${i}">Unit:</label>
-                    <select id="unit_${i}" name="unit_${i}">
-                        <option value="kg">kg</option>
-                        <option value="litre">litre</option>
-                        <option value="piece">piece</option>
-                    </select><br><br>
+                let rateInput = document.createElement('input');
+                rateInput.type = 'number';
+                rateInput.name = `rate_${i}`;
+                rateInput.required = true;
+                container.appendChild(rateInput);
 
-                    <label for="quantity_${i}">Quantity:</label>
-                    <input type="number" id="quantity_${i}" name="quantity_${i}" required><br><br>
-                `;
-                itemsContainer.appendChild(itemDiv);
-            }
-        }
-
-        function checkAddOption(selectElement) {
-            if (selectElement.value === "add_seller") {
-                window.location.href = "/add_seller/";
-            } else if (selectElement.value === "add_buyer") {
-                window.location.href = "/add_buyer/";
-            } else if (selectElement.value === "add_item") {
-                window.location.href = "/add_item/";
+                container.appendChild(document.createElement('br'));
             }
         }
     </script>
+</head>
+<body>
+    <h1>Create Invoice</h1>
+    <form method="POST" action="{% url 'create_invoice' %}">
+        {% csrf_token %}
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br>
+
+        <label for="bill_no">Bill Number:</label>
+        <input type="number" id="bill_no" name="bill_no" required><br>
+
+        <label for="bill_from">Bill From (Seller):</label>
+        <select id="bill_from" name="bill_from">
+            {% for seller in sellers %}
+                <option value="{{ seller.id }}">{{ seller.name }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="bill_to">Bill To (Buyer):</label>
+        <select id="bill_to" name="bill_to">
+            {% for buyer in buyers %}
+                <option value="{{ buyer.id }}">{{ buyer.name }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="transport">Transport:</label>
+        <input type="text" id="transport" name="transport"><br>
+
+        <label for="no_of_items">Number of Items:</label>
+        <input type="number" id="no_of_items" name="no_of_items" required onchange="generateItemFields()"><br>
+
+        <div id="itemFields"></div>
+
+        <label for="eway">E-way:</label>
+        <input type="text" id="eway" name="eway" required><br>
+
+        <label for="vehicle_no">Vehicle Number:</label>
+        <input type="text" id="vehicle_no" name="vehicle_no" required><br>
+
+        <label for="discount">Discount:</label>
+        <input type="number" id="discount" name="discount" required><br>
+
+        <label for="grand_total">Grand Total:</label>
+        <input type="number" step="0.01" id="grand_total" name="grand_total" required><br>
+
+        <button type="submit">Create Invoice</button>
+    </form>
 </body>
 </html>
