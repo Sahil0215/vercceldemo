@@ -476,7 +476,7 @@ def add_invoice(request):
         invoice_no=invoice_from.bill_count
         taxable_amt,avg_sgst,avg_cgst=0,0,0
 
-        invoice_items =[]
+        invoice_items_arr =[]
         for i in range(1,no_of_items+1):
             item_details_id=request.POST.get('item'+str(i))
             item_details=item.objects.get(id=item_details_id)
@@ -494,7 +494,7 @@ def add_invoice(request):
                 amount=amount
             )
             billedItem_object.save()
-            invoice_items.append(billedItem_object)
+            invoice_items_arr.append(billedItem_object)
 
 
         sgst_amt=(taxable_amt*(avg_sgst/no_of_items))/100
@@ -512,7 +512,7 @@ def add_invoice(request):
             vehicle_no=vehicle_no,
             invoice_to=invoice_to,
             no_of_items=no_of_items,
-            invoice_items=invoice_items,
+            invoice_items=invoice_items_arr,
             other_charges=other_charges,
             discount=discount,
             taxable_amt=taxable_amt,
@@ -522,7 +522,7 @@ def add_invoice(request):
             grand_total=grand_total
         )
         invoice_obj.save()
-        invoice_obj.invoice_items.set(invoice_items)
+        invoice_obj.invoice_items.set(invoice_items_arr)
         
         return redirect("/manage_invoice/")
     else:
