@@ -524,7 +524,10 @@ def add_invoice(request):
         invoice_obj.save()
         return redirect("/manage_invoice/")
     else:
-        return render(request, "add_invoice.html")
+        sellers = seller.objects.all()
+        buyers = buyer.objects.all()
+        items = item.objects.all()
+        return render(request, 'add_invoice.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
     
 
     
