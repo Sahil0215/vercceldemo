@@ -80,17 +80,17 @@ class billedItem(models.Model):
         return f"Billed Item: {self.item_details.name} - Quantity: {self.quantity}"
 
 class invoice(models.Model):
-    date = models.DateField()
+    date = models.DateField(blank=True, null=True)
     bill_no = models.PositiveIntegerField(unique=True)
     bill_from = models.ForeignKey(seller, on_delete=models.CASCADE, related_name='bill_from', blank=True, null=True)
     bill_to = models.ForeignKey(buyer, on_delete=models.CASCADE, related_name='bill_to', blank=True, null=True)
     transport=models.CharField(max_length=20, blank = True)
     no_of_items = models.PositiveIntegerField()
-    billed_items = models.ManyToManyField(billedItem, related_name='invoices')
+    billed_items = models.ManyToManyField(billedItem, related_name='invoices',blank=True, null=True)
     eway = models.CharField(max_length=20)
     vehicle_no = models.CharField(max_length=10)
     discount=models.PositiveIntegerField()
-    grand_total = models.DecimalField(max_digits=15, decimal_places=2)
+    grand_total = models.PositiveIntegerField()
 
     def __str__(self):
         return f"Bill {self.bill_no} - {self.date}"
