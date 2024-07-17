@@ -1,0 +1,95 @@
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instabill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #000;
+            border-radius: 10px;
+        }
+        .sidebar {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+        .sidebar button.active {
+            background-color: #d1e7fd;
+        }
+        .content {
+            flex: 4;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .content div {
+            width: 30%;
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #000;
+            border-radius: 10px;
+            background-color: #d1e7fd;
+        }
+        .header, .footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .header h1, .header a {
+            margin: 0;
+        }
+        .header a {
+            text-decoration: none;
+            color: #000;
+            padding: 10px 20px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSTABILL</h1>
+        <a href="{% url 'logout_page' %}">LOGOUT</a>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <a href="{% url 'home' %}"><button>HOME</button></a>
+            <a href="{% url 'manage' %}"><button class="active">MANAGE</button></a>
+            <a href="{% url 'generate' %}"><button>GENERATE</button></a>
+            <a href="{% url 'view' %}"><button>VIEW/PRINT</button></a>
+            <a href="{% url 'entry' %}"><button>ENTRY</button></a>
+        </div>
+        <div class="sidebar">
+            <a href="{% url 'manage_seller' %}"><button>Manage Seller</button></a>
+            <a href="{% url 'manage_buyer' %}"><button>Manage Buyer</button></a>
+            <a href="{% url 'manage_employee' %}"><button>Manage Employee</button></a>
+            <a href="{% url 'manage_item' %}"><button>Manage Items</button></a>
+            <a href="{% url 'manage_invoice' %}"><button>Manage Invoices</button></a>
+        </div>
+    </div>
+</body>
+</html>

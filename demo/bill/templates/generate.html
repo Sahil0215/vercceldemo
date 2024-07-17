@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Form</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+        
+        <label for="bill_from">From (Seller):</label>
+        <select id="bill_from" name="bill_from" onchange="checkAddOption(this)">
+            {% for s in sellers %}
+            <option value="{{ s.id }}">{{ s.name}}</option>
+            {% endfor %}
+            <option value="add_seller">Add Seller</option>
+        </select><br><br>
+        
+        <label for="bill_to">To (Buyer):</label>
+        <select id="bill_to" name="bill_to" onchange="checkAddOption(this)">
+            {% for b in buyers %}
+            <option value="{{ b.id }}">{{ b.name }}</option>
+            {% endfor %}
+            <option value="add_buyer">Add Buyer</option>
+        </select><br><br>
+        
+        <label for="receiver_same_as_buyer">Is the receiver the same as the buyer?</label>
+        <input type="checkbox" id="receiver_same_as_buyer" name="receiver_same_as_buyer" checked onclick="toggleReceiver()"><br><br>
+        
+        <div id="receiver_div" style="display: none;">
+            <label for="receiver">Receiver:</label>
+            <select id="to" name="to" onchange="checkAddOption(this)">
+                {% for b in buyers %}
+                <option value="{{ b.id }}">{{ b.name }}</option>
+                {% endfor %}
+                <option value="add_buyer">Add Buyer</option>
+            </select><br><br>
+        </div>
+        
+        <label for="transport">Transport:</label>
+        <input type="text" id="transport" name="transport" required><br><br>
+        
+        <label for="vehicle_no">Vehicle No:</label>
+        <input type="text" id="vehicle_no" name="vehicle_no" required><br><br>
+        
+        <label for="eway_bill_no">E-way Bill No:</label>
+        <input type="text" id="eway_bill_no" name="eway_bill_no" required><br><br>
+        
+        <label for="num_items">Number of Items:</label>
+        <input type="number" id="num_items" name="num_items" required oninput="showItemBlocks()"><br><br>
+        
+        <label for="discount">Discount:</label>
+        <input type="number" id="discount" name="discount" value="0" required><br><br>
+        
+        <div id="items_container"></div>
+        
+        <button type="submit">Generate Bill</button>
+    </form>
+
+    <script>
+        function toggleReceiver() {
+            const receiverCheckbox = document.getElementById('receiver_same_as_buyer');
+            const receiverDiv = document.getElementById('receiver_div');
+            receiverDiv.style.display = receiverCheckbox.checked ? 'none' : 'block';
+        }
+
+        function showItemBlocks() {
+            const numItems = document.getElementById('num_items').value;
+            const itemsContainer = document.getElementById('items_container');
+            itemsContainer.innerHTML = '';
+
+            for (let i = 1; i <= numItems; i++) {
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `
+                    <h3>Item ${i}</h3>
+                    <label for="item_name">Item Name:</label>
+                    <select id="item_name" name="item_name" onchange="checkAddOption(this)">
+                        {% for i in items %}
+                        <option value="{{ i.name }}">{{ i.name }}</option>
+                        {% endfor %}
+                        <option value="add_item">Add Item</option>
+                    </select><br><br>
+
+                    <label for="rate_${i}">Rate:</label>
+                    <input type="number" id="rate_${i}" name="rate_${i}" required><br><br>
+
+                    <label for="unit_${i}">Unit:</label>
+                    <select id="unit_${i}" name="unit_${i}">
+                        <option value="kg">kg</option>
+                        <option value="litre">litre</option>
+                        <option value="piece">piece</option>
+                    </select><br><br>
+
+                    <label for="quantity_${i}">Quantity:</label>
+                    <input type="number" id="quantity_${i}" name="quantity_${i}" required><br><br>
+                `;
+                itemsContainer.appendChild(itemDiv);
+            }
+        }
+
+        function checkAddOption(selectElement) {
+            if (selectElement.value === "add_seller") {
+                window.location.href = "/add_seller/";
+            } else if (selectElement.value === "add_buyer") {
+                window.location.href = "/add_buyer/";
+            } else if (selectElement.value === "add_item") {
+                window.location.href = "/add_item/";
+            }
+        }
+    </script>
+</body>
+</html>
