@@ -18,6 +18,7 @@
             {% endfor %}
             <option value="add_seller">Add Seller</option>
         </select>
+        <br>
         
         
         
@@ -28,44 +29,39 @@
             {% endfor %}
             <option value="add_buyer">Add Buyer</option>
         </select>
-
+        <br>
 
         <label>Date: </label>
-        <input type="date" name="date">
+        <input type="date" name="date"><br>
 
         
         <label>E-Way Bill No. (if any):  </label>
-        <input type="text" name="eway">
+        <input type="text" name="eway"><br>
         
 
         <label>Transport :  </label>
-        <input type="text" name="transport">
+        <input type="text" name="transport"><br>
         
 
         <label>Vehicle No :  </label>
-        <input type="text" name="vehicle_no">
+        <input type="text" name="vehicle_no"><br>
         
         
         <label>Number Of Items to be Billed :  </label>
-        <input type="number" name="no_of_items">
+        <input type="number" name="no_of_items"><br>
 
-
-        <label>Number Of Items to be Billed :  </label>
-        <input type="number" id="no_of_items" name="no_of_items">
-
+        <div id="items_container"></div><br>
         
+
+
         <label>Other Charges:  </label>
-        <input type="number" name="other_charges">
+        <input type="number" name="other_charges"><br>
 
         
         <label>Discount:  </label>
-        <input type="number" name="discount">
+        <input type="number" name="discount"><br>
 
-        
-        <label>:  </label>
-        <input type="number" name="other_charges">
-        
-        <div id="items_container"></div>
+    
         
         <button type="submit">Generate Bill</button>
     </form>

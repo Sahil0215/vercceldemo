@@ -530,11 +530,6 @@ def add_invoice(request):
         return render(request, 'add_invoice.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
     
 
-    
-
-
-
-
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
 
