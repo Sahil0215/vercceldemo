@@ -457,7 +457,6 @@ def delete_invoice(request, invoice_id):
 @login_required(login_url="/login_page/")
 def add_invoice(request):
     if request.method == "POST":
-
         invoice_from_id=request.POST.get('invoice_from')
         invoice_to_id=request.POST.get('invoice_to')
         date=request.POST.get('date')
@@ -472,8 +471,9 @@ def add_invoice(request):
         invoice_to=buyer.objects.get(id=invoice_to_id)
         
         invoice_from.bill_count=invoice_from.bill_count+1
-        invoice_no=invoice_from.bill_count
+        invoice_from.save()
 
+        invoice_no=invoice_from.bill_count
         taxable_amt,avg_sgst,avg_cgst=0,0,0
 
         invoice_items =[]
@@ -522,6 +522,8 @@ def add_invoice(request):
             grand_total=grand_total
         )
         invoice_obj.save()
+        invoice_obj.invoice_items.set(invoice_items)
+        
         return redirect("/manage_invoice/")
     else:
         sellers = seller.objects.all()
