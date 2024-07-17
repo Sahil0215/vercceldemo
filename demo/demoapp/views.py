@@ -516,10 +516,7 @@ def delete_invoice(request, invoice_id):
 #         items = item.objects.all()
 #         return render(request, 'add_invoice.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
 
-from django.utils import timezone
-
-@login_required(login_url="/login_page/")
-
+import json
 def add_invoice(request):
     if request.method == 'POST':
         # Invoice details
@@ -566,13 +563,19 @@ def add_invoice(request):
             billed_item.save()
             new_invoice.billed_items.add(billed_item)
 
-        return redirect('invoice_list')  # Redirect to a list of invoices or wherever you need
+        return redirect('manage_invoice')  # Redirect to a list of invoices or wherever you need
 
     else:
         buyers = buyer.objects.all()
         sellers = seller.objects.all()
         items = item.objects.all()
-        return render(request, 'create_invoice.html', {'buyers': buyers, 'sellers': sellers, 'items': items})
+        items_json = json.dumps(list(items.values('id', 'name')))
+        return render(request, 'create_invoice.html', {
+            'buyers': buyers,
+            'sellers': sellers,
+            'items': items,
+            'items_json': items_json,
+        })
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
