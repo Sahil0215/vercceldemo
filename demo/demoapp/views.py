@@ -519,8 +519,10 @@ def delete_invoice(request, invoice_id):
 from django.utils import timezone
 
 @login_required(login_url="/login_page/")
+
 def add_invoice(request):
     if request.method == 'POST':
+        # Invoice details
         date = request.POST['date']
         bill_no = request.POST['bill_no']
         bill_from_id = request.POST['bill_from']
@@ -550,16 +552,16 @@ def add_invoice(request):
         new_invoice.save()
 
         for i in range(no_of_items):
+            item_id = request.POST[f'item_{i}']
             quantity = int(request.POST[f'quantity_{i}'])
             rate = int(request.POST[f'rate_{i}'])
-            # Assuming you need to calculate total as quantity * rate
             total = quantity * rate
 
             billed_item = billedItem(
+                item_details=item.objects.get(id=item_id),
                 quantity=quantity,
                 rate=rate,
                 total=total,
-                item_details=None  # Assuming item_details is optional, handle as needed
             )
             billed_item.save()
             new_invoice.billed_items.add(billed_item)
@@ -571,7 +573,7 @@ def add_invoice(request):
         sellers = seller.objects.all()
         items = item.objects.all()
         return render(request, 'create_invoice.html', {'buyers': buyers, 'sellers': sellers, 'items': items})
-    
+
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
 

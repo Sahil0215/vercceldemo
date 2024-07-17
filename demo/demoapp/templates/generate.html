@@ -10,9 +10,24 @@
             container.innerHTML = ''; // Clear existing fields
 
             for (let i = 0; i < numberOfItems; i++) {
+                // Create fields for each billed item
+                let itemLabel = document.createElement('label');
+                itemLabel.innerHTML = `Item ${i + 1}: `;
+                container.appendChild(itemLabel);
+
+                let itemSelect = document.createElement('select');
+                itemSelect.name = `item_${i}`;
+                {% for item in items %}
+                    let option = document.createElement('option');
+                    option.value = '{{ item.id }}';
+                    option.innerHTML = '{{ item.name }}';
+                    itemSelect.appendChild(option);
+                {% endfor %}
+                container.appendChild(itemSelect);
+
                 // Create quantity input
                 let quantityLabel = document.createElement('label');
-                quantityLabel.innerHTML = `Quantity ${i + 1}: `;
+                quantityLabel.innerHTML = ` Quantity ${i + 1}: `;
                 container.appendChild(quantityLabel);
 
                 let quantityInput = document.createElement('input');
@@ -41,45 +56,48 @@
     <h1>Create Invoice</h1>
     <form method="POST">
         {% csrf_token %}
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br>
+        <fieldset>
+            <legend>Invoice Information</legend>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
 
-        <label for="bill_no">Bill Number:</label>
-        <input type="number" id="bill_no" name="bill_no" required><br>
+            <label for="bill_no">Bill Number:</label>
+            <input type="number" id="bill_no" name="bill_no" required><br>
 
-        <label for="bill_from">Bill From (Seller):</label>
-        <select id="bill_from" name="bill_from">
-            {% for seller in sellers %}
-                <option value="{{ seller.id }}">{{ seller.name }}</option>
-            {% endfor %}
-        </select><br>
+            <label for="bill_from">Bill From (Seller):</label>
+            <select id="bill_from" name="bill_from">
+                {% for seller in sellers %}
+                    <option value="{{ seller.id }}">{{ seller.name }}</option>
+                {% endfor %}
+            </select><br>
 
-        <label for="bill_to">Bill To (Buyer):</label>
-        <select id="bill_to" name="bill_to">
-            {% for buyer in buyers %}
-                <option value="{{ buyer.id }}">{{ buyer.name }}</option>
-            {% endfor %}
-        </select><br>
+            <label for="bill_to">Bill To (Buyer):</label>
+            <select id="bill_to" name="bill_to">
+                {% for buyer in buyers %}
+                    <option value="{{ buyer.id }}">{{ buyer.name }}</option>
+                {% endfor %}
+            </select><br>
 
-        <label for="transport">Transport:</label>
-        <input type="text" id="transport" name="transport"><br>
+            <label for="transport">Transport:</label>
+            <input type="text" id="transport" name="transport"><br>
 
-        <label for="no_of_items">Number of Items:</label>
-        <input type="number" id="no_of_items" name="no_of_items" required onchange="generateItemFields()"><br>
+            <label for="no_of_items">Number of Items:</label>
+            <input type="number" id="no_of_items" name="no_of_items" required onchange="generateItemFields()"><br>
 
-        <div id="itemFields"></div>
+            <div id="itemFields"></div>
 
-        <label for="eway">E-way:</label>
-        <input type="text" id="eway" name="eway" required><br>
+            <label for="eway">E-way:</label>
+            <input type="text" id="eway" name="eway" required><br>
 
-        <label for="vehicle_no">Vehicle Number:</label>
-        <input type="text" id="vehicle_no" name="vehicle_no" required><br>
+            <label for="vehicle_no">Vehicle Number:</label>
+            <input type="text" id="vehicle_no" name="vehicle_no" required><br>
 
-        <label for="discount">Discount:</label>
-        <input type="number" id="discount" name="discount" required><br>
+            <label for="discount">Discount:</label>
+            <input type="number" id="discount" name="discount" required><br>
 
-        <label for="grand_total">Grand Total:</label>
-        <input type="number" step="0.01" id="grand_total" name="grand_total" required><br>
+            <label for="grand_total">Grand Total:</label>
+            <input type="number" step="0.01" id="grand_total" name="grand_total" required><br>
+        </fieldset>
 
         <button type="submit">Create Invoice</button>
     </form>
