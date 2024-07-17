@@ -574,7 +574,7 @@ def add_invoice(request):
                 invoice_instance.grand_total = grand_total
                 invoice_instance.save()
 
-                return redirect('invoice_detail', invoice_id=invoice_instance.id)
+                return redirect('manage_invoice')
 
         except Exception as e:
             return HttpResponse(f"Error: {e}")
