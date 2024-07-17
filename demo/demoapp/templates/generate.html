@@ -10,19 +10,20 @@
             container.innerHTML = ''; // Clear existing fields
 
             for (let i = 0; i < numberOfItems; i++) {
-                // Create fields for each billed item
                 let itemLabel = document.createElement('label');
                 itemLabel.innerHTML = `Item ${i + 1}: `;
                 container.appendChild(itemLabel);
 
                 let itemSelect = document.createElement('select');
                 itemSelect.name = `item_${i}`;
-                {% for item in items %}
+
+                // Populate the select options with items
+                items.forEach(item => {
                     let option = document.createElement('option');
-                    option.value = '{{ item.id }}';
-                    option.innerHTML = '{{ item.name }}';
+                    option.value = item.id;
+                    option.innerHTML = item.name;
                     itemSelect.appendChild(option);
-                {% endfor %}
+                });
                 container.appendChild(itemSelect);
 
                 // Create quantity input
@@ -101,5 +102,10 @@
 
         <button type="submit">Create Invoice</button>
     </form>
+
+    <script>
+        // Pass Django context items to JavaScript
+        const items = JSON.parse('{{ items_json|escapejs }}');
+    </script>
 </body>
 </html>
