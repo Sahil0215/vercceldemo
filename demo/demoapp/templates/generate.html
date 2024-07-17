@@ -39,7 +39,7 @@
 </head>
 <body>
     <h1>Create Invoice</h1>
-    <form method="POST" action="{% url 'create_invoice' %}">
+    <form method="POST">
         {% csrf_token %}
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" required><br>
