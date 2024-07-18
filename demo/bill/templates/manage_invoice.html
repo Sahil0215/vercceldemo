@@ -29,22 +29,23 @@
     <table>
         <thead>
             <tr>
-                <th>Emp. ID</td>
-                <th>Name</td>
-                <th>Phone</td>
-                <th>Address</td>
-                <th>Aadhaar No. </td>
+                <th>Date</td>
+                <th>From</td>
+                <th>To</td>
+                <th>Invoice No</td>
+                <th>Grand Total</td>
                 <th>Action</td>
             </tr>
         </thead>
         <tbody>
-            {% for employee in employees %}
+            {% for invoice in invoices %}
                 <tr>
-                    <td>{{ employee.empid }}</td>
-                    <td>{{ employee.name }}</td>
-                    <td>{{ employee.phone }}</td>
-                    <td>{{ employee.city }} , {{ employee.state }}</td>
-                    <td>{{ employee.aadhaar }}</td>
+                    <td>{{ invoice.date }}</td>
+                    <td>{{ invoice.invoice_from.name }}</td>
+                    <td>{{ invoice.invoice_to.name }}</td>
+                    <td>{{ invoice.invoice_no}}</td>
+                    <td>{{ invoice.grand_total}}</td>
+
                     <td>
                         <form action="{% url 'delete_employee' employee.id %}" method="POST">
                             {% csrf_token %}
