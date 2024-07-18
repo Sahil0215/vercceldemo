@@ -421,11 +421,14 @@ def add_item(request):
     if request.method == "POST":
         hsn=request.POST.get('hsn')
         name=request.POST.get('name')
-        tax=request.POST.get('tax')
+        tax=int(request.POST.get('tax'))
+        sgst=tax/2
+        cgst=sgst
         item_object = item(
             hsn=hsn,
             name=name,
-            tax=tax
+            sgst=sgst,
+            cgst=cgst
         )
 
         item_object.save()

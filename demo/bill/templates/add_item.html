@@ -13,9 +13,15 @@
         <label for="name"> Item Name:</label>
         <input type="text" id="name" name="name" required><br>
 
-        <label for="tax">TAX:</label>
-        <input type="text" id="tax" name="tax" required><br>
-
+        <label for="tax">Tax:</label>
+        <select name="sgst" >
+            
+            <option value="0">0%</option>
+            <option value="5">5%</option>
+            <option value="12">12%</option>
+            <option value="18">18%</option>
+            <option value="28">28%</option>
+        </select>
         <label for="hsn">HSN Code:</label>
         <input type="text" id="hsn" name="hsn"><br>
 
