@@ -111,7 +111,7 @@
                             <td>GST</td>
                             <td>Phone</td>
                             <td>Address</td>
-                            <td>Email</td>
+                            <td>Balance</td>
                             <td>Action</td>
                         </tr>
                     </thead>
@@ -121,7 +121,7 @@
             <td>{{ buyer.gst }}</td>
             <td>{{ buyer.phone }}</td>
             <td>{{ buyer.city }} , {{ buyer.state }}</td>
-            <td>{{ buyer.email }}</td>
+            <td>{{ buyer.bal }}</td>
             <td>
                 <form action="{% url 'delete_buyer' buyer.id %}" method="POST">
                     {% csrf_token %}

@@ -538,8 +538,12 @@ def add_invoice(request):
             grand_total=grand_total,
             grand_total_words=amount_to_words(grand_total)
         )
+        
+        invoice_to.bal+=grand_total
+
         invoice_obj.save()
         invoice_obj.invoice_items.set(invoice_items_arr)
+
         
         return redirect("/manage_invoice/")
     else:
@@ -558,5 +562,5 @@ from num2words import num2words
 def amount_to_words(amount):
     amount_words = num2words(amount, lang='en_IN', to='currency', currency='INR').replace(",", "")
     amount_words = amount_words.capitalize()
-    amount_words += ' only'
+    amount_words += "only"
     return amount_words
