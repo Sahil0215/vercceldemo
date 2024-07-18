@@ -1,19 +1,3 @@
-"""
-URL configuration for instabill project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from bill import views
@@ -25,7 +9,6 @@ urlpatterns = [
     path('register/', views.register, name="register"),
     path('registersuccess/', views.registersuccess, name="registersuccess"),
     path('home/', views.home, name="home"),
-    path('manage/', views.manage, name="manage"),
     path('manage_buyer/', views.manage_buyer, name="manage_buyer"),
     path('add_buyer/', views.add_buyer, name="add_buyer"),
     path('delete_buyer/<int:buyer_id>/', views.delete_buyer, name="delete_buyer"),
@@ -42,9 +25,7 @@ urlpatterns = [
     path('add_invoice/', views.add_invoice, name="add_invoice"),
     path('delete_invoice/<int:invoice_id>/', views.delete_invoice, name="delete_invoice"),
     path('print_invoice/<int:invoice_id>/', views.print_invoice, name="print_invoice"),
-    path('generate/', views.generate, name="generate"),
     path('view/', views.view, name="view"),
     path('entry/', views.entry, name="entry"),
     path('deleteallusers/', views.deleteallusers, name="deleteallusers"),
-    path('generatesuccess/', views.generatesuccess, name="generatesuccess"),
 ]
