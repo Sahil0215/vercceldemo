@@ -457,7 +457,7 @@ def delete_invoice(request, invoice_id):
 @login_required(login_url="/login_page/")
 def print_invoice(request, invoice_id):
     bill= get_object_or_404(invoice, id=invoice_id)
-    return render(request, 'view.html', {'bill': bill})
+    return render(request, 'view.html', {'bill': bill, 'x' : range(1,20-bill.no_of_items)})
 
 
 

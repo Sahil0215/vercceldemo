@@ -124,19 +124,20 @@
                 <td>CGST</td>
                 <td>Amount</td>
             </tr>
-<!--             
-            {% for item in bill.billed_items %}
-            <tr class="itmes">
-            <td class="no-border" style="width: 10px;">{{ forloop.counter }}</td>
-            <td colspan="5" class="no-border">{{ item.name }}</td>
-            <td class="no-border">{{ item.hsn }}</td>
-            <td class="no-border">{{ item.quantity }}</td>
-            <td class="no-border">{{ item.rate }}</td>
-            <td class="no-border">9%</td>
-            <td class="no-border">9%</td>
-            <td class="no-border-left">{{ item.amt }}</td>
+            
+            {% for billed_item in bill.invoice_items.all %}
+            <tr class="items">
+                <td class="no-border" style="width: 10px;"></td>
+                <td colspan="5" class="no-border">{{ billed_item.item_details.name }}</td>
+                <td class="no-border">{{ billed_item.item_details.hsn }}</td>
+                <td class="no-border">{{ billed_item.quantity }}</td>
+                <td class="no-border">{{ billed_item.rate }}</td>
+                <td class="no-border">9%</td>
+                <td class="no-border">9%</td>
+                <td class="no-border-left">{{ billed_item.amount }}</td>
             </tr>
             {% endfor %}
+            
         
             {% for i in x %}
             <tr class="items">
@@ -156,49 +157,45 @@
         <tr class="terms">
             <td colspan="7" style="text-align: left;">
                 <u><i>BANK DETAILS:</i></u><br>
-                <b>BANK: {{seller.bank_name}}<br>
-                    A/C No.: {{seller.bank_acno}}<br>
-                    IFS CODE: {{seller.bank_ifsc}}<br>
-                        BRANCH: {{seller.bank_branch}}</b>
+                <b>BANK: {{bill.invoice_from.bank_detials.name}}<br>
+                    A/C No.: {{bill.invoice_from.bank_detials.ac}}<br>
+                    IFS CODE: {{bill.invoice_from.bank_detials.ifsc}}<br>
+                        BRANCH: {{bill.invoice_from.bank_detials.branch}}</b>
                     </td>
                     
                     <td colspan="5">
                     <table style="border: none;">
                         <tr style="height:15px;">
                             <td style="border-top: none; border-left: none; border-right: none; text-align: left;">Freight/Other Charge</td>
-                            <td style="border-top: none; border-left: none; border-right: none; text-align: right;">0.00</td>
-                        </tr>
-                        <tr style="height:15px;">
-                            <td style="border-top: none; border-left: none; border-right: none; text-align: left;">Amount</td>
-                            <td style="border-top: none; border-left: none; border-right: none; text-align: right;">{{sum}}</td>
+                            <td style="border-top: none; border-left: none; border-right: none; text-align: right;">{{bill.other_charges}}</td>
                         </tr>
                         <tr style="height:15px;">
                             <td style="border-top: none; border-left: none; border-right: none; text-align: left;">Discount</td>
-                            <td style="border-top: none; border-left: none; border-right: none; text-align: right;">{{dis}}</td>
+                            <td style="border-top: none; border-left: none; border-right: none; text-align: right;">{{bill.discount}}</td>
                         </tr>
                         <tr style="height:15px;">
                             <td style="border-top: none; border-left: none; border-right: none; text-align: left;">Taxble Amount</td>
-                            <td style="border-top: none; border-left: none; border-right: none; text-align: right;">{{tax_amt}}</td>
+                            <td style="border-top: none; border-left: none; border-right: none; text-align: right;">{{bill.taxable_amt}}</td>
                         </tr>
                         
                         <tr style="height:15px;">
                             <td style="border: none; text-align: left;">SGST PAYABLE</td>
-                            <td style="border: none; text-align: right;">{{gst}}</td>
+                            <td style="border: none; text-align: right;">{{bill.sgst_amt}}</td>
                         </tr>
                         <tr style="height:15px;">
                             <td style="border: none; text-align: left;">CGST PAYABLE</td>
-                            <td style="border: none; text-align: right;">{{gst}}</td>
+                            <td style="border: none; text-align: right;">{{bill.cgst_amt}}</td>
                         </tr>
                         <tr style="height:15px;">
                             <td style="border: none; text-align: left;">Total GST Amount</td>
-                            <td style="border: none; text-align: right;">{{tgst}}</td>
+                            <td style="border: none; text-align: right;">{{bill.tgst_amt}}</td>
                         </tr>
                         
                     </table>
                 </td>
             </tr>
             <tr class="amt">
-                <td colspan="7" style="font-size: 13px;">{{amtword}}</td><td colspan="5">GRAND TOTAL : {{gtotal}} </td>
+                <td colspan="7" style="font-size: 13px;"></td><td colspan="5">GRAND TOTAL : {{bill.grand_total}} </td>
             </tr>
             <tr class = "terms">
                 <td colspan="7" style="text-align: left;">
@@ -210,7 +207,7 @@
                     --------------------------------------------------------------------------------<br>
                     Receiver Signature</td>
                     <td colspan="5"><b>For SHRI KHATU SHYAM PLASTIC</b><br><br><br><br><br>Authority Sign</td>
-                </tr> -->
+                </tr>
             </tbody>
         </table>
     </form>
