@@ -354,17 +354,17 @@ def delete_invoice(request, invoice_id):
     invoice_obj = get_object_or_404(invoice, id=invoice_id)
 
     if request.method == 'POST':
-        # Adjust balance of the buyer
+        
         invoice_obj.invoice_to.bal -= invoice_obj.grand_total
         invoice_obj.invoice_to.save()
 
-        # Iterate through each billedItem and adjust stock levels
+        
         for billed_item in invoice_obj.invoice_items.all():
             item = billed_item.item_details
             item.stock += billed_item.quantity
             item.save()
 
-        # Delete the invoice object
+
         invoice_obj.delete()
         
         return redirect('manage_invoice')
