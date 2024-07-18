@@ -44,6 +44,7 @@ urlpatterns = [
 
     path('entry/', views.entry, name="entry"),
     path('entry_payment/', views.entry_payment, name="entry_payment"),
+    path('entry_stock/', views.entry_stock, name="entry_stock"),
 
 
     path('deleteallusers/', views.deleteallusers, name="deleteallusers"),
