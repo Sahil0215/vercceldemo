@@ -5,27 +5,26 @@
     <title>Create ITEM</title>
 </head>
 <body>
+    
     <h1>Create ITEM</h1>
-    <form method="POST" action="">
+    <form method="POST" action="{% url 'add_item' %}">
         {% csrf_token %}
-       
-
-        <label for="name"> Item Name:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="tax">Tax:</label>
-        <select name="sgst" >
-            
+        <label for="hsn">HSN:</label>
+        <input type="text" id="hsn" name="hsn" required>
+        
+        <label for="name">Item Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="tax">Select Tax Rate:</label>
+        <select name="tax">
             <option value="0">0%</option>
             <option value="5">5%</option>
             <option value="12">12%</option>
             <option value="18">18%</option>
             <option value="28">28%</option>
         </select>
-        <label for="hsn">HSN Code:</label>
-        <input type="text" id="hsn" name="hsn"><br>
-
-        <button type="submit">Submit</button>
-    </form>
+    
+        <button type="submit">Add Item</button>
+    </form>    
 </body>
 </html>

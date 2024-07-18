@@ -18,7 +18,7 @@ class buyer(models.Model):
     email = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=15)
     gst = models.CharField(max_length=20)
-    bal = models.PositiveIntegerField(default=0)
+    bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     def __str__(self):
         return self.name
 
@@ -39,7 +39,7 @@ class seller(models.Model):
     state = models.CharField(max_length=20)
     phone = models.CharField(max_length=15)
     email = models.CharField(max_length=50, blank=True, null=True)
-    bal = models.IntegerField(default=0)
+    bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     bank_details= models.ForeignKey(bank, on_delete=models.CASCADE , blank=True, null=True)
     bill_count = models.IntegerField(default=0)
 
@@ -54,7 +54,7 @@ class employee(models.Model):
     city = models.CharField(max_length=30, blank=True, null=True)
     state = models.CharField(max_length=20, blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
-    bal = models.IntegerField(default=0)
+    bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     aadhaar = models.IntegerField(default=0)
 
     def __str__(self):
@@ -64,8 +64,8 @@ class employee(models.Model):
 class item(models.Model):
     name = models.CharField(max_length=20)
     hsn = models.CharField(max_length=7)
-    sgst = models.IntegerField(default=0)
-    cgst = models.IntegerField(default=0)
+    sgst = models.DecimalField(max_digits=5, decimal_places=2)
+    cgst = models.DecimalField(max_digits=5, decimal_places=2)
     quantity = models.IntegerField(default=0)
 
     def __str__(self):
@@ -74,8 +74,8 @@ class item(models.Model):
 class billedItem(models.Model):
     item_details = models.ForeignKey(item, on_delete=models.CASCADE, related_name='billed_item', blank=True, null=True)
     quantity = models.PositiveIntegerField(default=0)
-    rate = models.PositiveIntegerField(default=0)
-    amount = models.PositiveIntegerField(default=0)
+    rate = models.DecimalField(max_digits=20, decimal_places=2)
+    amount = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self):
         return f"Billed Item: {self.item_details.name} - Quantity: {self.quantity}"
@@ -90,13 +90,13 @@ class invoice(models.Model):
     invoice_to=models.ForeignKey(buyer, on_delete=models.CASCADE , blank=True, null=True)
     no_of_items=models.PositiveIntegerField(default=0)
     invoice_items=models.ManyToManyField(billedItem)
-    other_charges=models.PositiveIntegerField(default=0)
-    discount=models.PositiveIntegerField(default=0)
-    taxable_amt=models.PositiveIntegerField(default=0)
-    sgst_amt=models.PositiveIntegerField(default=0)
-    cgst_amt=models.PositiveIntegerField(default=0)
-    tgst_amt=models.PositiveIntegerField(default=0)
-    grand_total=models.PositiveIntegerField(default=0)
+    other_charges=models.DecimalField(max_digits=10, decimal_places=2)
+    discount=models.DecimalField(max_digits=10, decimal_places=2)
+    taxable_amt=models.DecimalField(max_digits=10, decimal_places=2)
+    sgst_amt=models.DecimalField(max_digits=10, decimal_places=2)
+    cgst_amt=models.DecimalField(max_digits=10, decimal_places=2)
+    tgst_amt=models.DecimalField(max_digits=10, decimal_places=2)
+    grand_total=models.DecimalField(max_digits=10, decimal_places=2)
     grand_total_words=models.CharField(max_length=150, null=True)
 
     def __str__(self):
