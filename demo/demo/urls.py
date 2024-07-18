@@ -43,6 +43,9 @@ urlpatterns = [
 
 
     path('entry/', views.entry, name="entry"),
+    path('entry_payment/', views.entry_payment, name="entry_payment"),
+
+
     path('deleteallusers/', views.deleteallusers, name="deleteallusers"),
 
 ]
