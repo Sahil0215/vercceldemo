@@ -21,7 +21,9 @@
             <option value="{{ b.id }}">{{ b.name}}</option>
             {% endfor %}
         </select>
+
         <br>
+        
         <label>To:</label>
         <select name="money_to" required>
             {% for s in sellers %}
@@ -35,6 +37,10 @@
             {% endfor %}
         </select>
         <br>
+        
+        <label>Amount : </label>
+        <input type="text" name="amount" required><br>
+        
         
         <label>Date: </label>
         <input type="date" name="date" required><br>

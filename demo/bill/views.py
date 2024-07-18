@@ -109,7 +109,10 @@ def entry(request):
 
 @login_required(login_url="/login_page/")
 def entry_payment(request):
-    return render(request, "entry_payment.html")
+    sellers = seller.objects.all()
+    buyers = buyer.objects.all()
+    employees = employee.objects.all()
+    return render(request, 'entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employee': employees})
 
 
 @login_required(login_url="/login_page/")
