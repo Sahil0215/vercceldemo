@@ -76,7 +76,7 @@ class billedItem(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     rate = models.DecimalField(max_digits=20, decimal_places=2)
     amount = models.DecimalField(max_digits=20, decimal_places=2)
-
+    unit = models.CharField(max_length=5, blank=True, null=True)
     def __str__(self):
         return f"Billed Item: {self.item_details.name} - Quantity: {self.quantity}"
 

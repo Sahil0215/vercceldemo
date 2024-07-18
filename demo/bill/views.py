@@ -499,6 +499,7 @@ def add_invoice(request):
             item_details = item.objects.get(id=item_details_id)
             quantity = int(request.POST.get('quantity' + str(i)))
             rate = Decimal(request.POST.get('rate' + str(i)))
+            unit = request.POST.get('unit' + str(i))
             amount = quantity * rate
             taxable_amt += amount
             avg_sgst += item_details.sgst
@@ -508,6 +509,7 @@ def add_invoice(request):
                 item_details=item_details,
                 quantity=quantity,
                 rate=rate,
+                unit=unit,
                 amount=amount
             )
             billedItem_object.save()
