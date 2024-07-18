@@ -117,7 +117,7 @@
                     {% for item in items %}
         <tr>
             <td>{{ item.name }}</td>
-            <td>{{ item.tax }} %</td>
+            <td>{{ item.sgst }} % + {{ item.cgst }} %</td>
             <td>{{ item.hsn }}</td>
             <td>{{ item.stock }}</td>
             <td>

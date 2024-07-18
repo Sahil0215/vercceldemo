@@ -424,11 +424,13 @@ def add_item(request):
         tax=int(request.POST.get('tax'))
         sgst=tax/2
         cgst=sgst
+        stock=int(request.POST.get('stock'))
         item_object = item(
             hsn=hsn,
             name=name,
             sgst=sgst,
-            cgst=cgst
+            cgst=cgst,
+            stock=stock
         )
 
         item_object.save()
