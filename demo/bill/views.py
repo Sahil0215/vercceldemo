@@ -235,7 +235,7 @@ def add_employee(request):
         city = request.POST.get('city')
         state = request.POST.get('state')
         email = request.POST.get('email')
-        bal = request.POST.get('bal',0)
+        bal = request.POST.get('bal')
         aadhaar = request.POST.get('aadhaar')
         
         
