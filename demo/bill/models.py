@@ -101,3 +101,4 @@ class invoice(models.Model):
 
     def __str__(self):
         return self.invoice_no+"==>From-"+self.invoice_from.name+"==To-"+self.invoice_to.name
+

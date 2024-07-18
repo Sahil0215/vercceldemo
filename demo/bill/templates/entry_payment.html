@@ -10,32 +10,39 @@
     <form method="post">
         {% csrf_token %}
         
-
-
         <label>From:</label>
-        <select name="money_from" required>
+        <select name="money_from" id="money_from" required>
             {% for s in sellers %}
-            <option value="{{ s.id }}">{{ s.name}}</option>
+            <option value="{{ s.id }}">Seller - {{ s.name }}</option>
             {% endfor %}
             {% for b in buyers %}
-            <option value="{{ b.id }}">{{ b.name}}</option>
+            <option value="{{ b.id }}">Buyer - {{ b.name }}</option>
+            {% endfor %}
+            {% for e in employees %}
+            <option value="{{ e.id }}">Employee - {{ e.name }}</option>
             {% endfor %}
         </select>
-
         <br>
         
         <label>To:</label>
-        <select name="money_to" required>
+        <select name="money_to" id="money_to" required>
             {% for s in sellers %}
-            <option value="{{ s.id }}">Seller - {{ s.name}}</option>
+            {% if s.id != selected_from_id %}
+            <option value="{{ s.id }}">Seller - {{ s.name }}</option>
+            {% endif %}
             {% endfor %}
             {% for b in buyers %}
-            <option value="{{ b.id }}">Buyer - {{ b.name}}</option>
+            {% if b.id != selected_from_id %}
+            <option value="{{ b.id }}">Buyer - {{ b.name }}</option>
+            {% endif %}
             {% endfor %}
             {% for e in employees %}
-            <option value="{{ e.id }}">Employee - {{ e.name}}</option>
+            {% if e.id != selected_from_id %}
+            <option value="{{ e.id }}">Employee - {{ e.name }}</option>
+            {% endif %}
             {% endfor %}
         </select>
+        
         <br>
         
         <label>Amount : </label>

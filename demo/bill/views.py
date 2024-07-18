@@ -109,10 +109,21 @@ def entry(request):
 
 @login_required(login_url="/login_page/")
 def entry_payment(request):
-    sellers = seller.objects.all()
-    buyers = buyer.objects.all()
-    employees = employee.objects.all()
-    return render(request, 'entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
+    if request.method == "POST":
+        money_from_id = request.POST.get('money_from')
+        money_to_id = request.POST.get('money_to')
+        amount = request.POST.get('amount')
+        date = request.POST.get('date')
+        mode = request.POST.get('mode')
+        note = request.POST.get('note')
+
+        money_from = seller.objects.get(id=money_from_id)
+        money_to = seller.objects.get(id=money_to_id)
+    else:
+        sellers = seller.objects.all()
+        buyers = buyer.objects.all()
+        employees = employee.objects.all()
+        return render(request, 'entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
 
 
 @login_required(login_url="/login_page/")
