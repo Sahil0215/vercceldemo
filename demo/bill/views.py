@@ -510,13 +510,13 @@ def add_invoice(request):
             )
             billedItem_object.save()
             invoice_items_arr.append(billedItem_object)
-
+        taxable_amt+=other_charges-discount
         avg_sgst = avg_sgst / no_of_items
         avg_cgst = avg_cgst / no_of_items
         sgst_amt = (taxable_amt * avg_sgst) / Decimal('100.00')
         cgst_amt = (taxable_amt * avg_cgst) / Decimal('100.00')
         tgst_amt = sgst_amt + cgst_amt
-        grand_total = taxable_amt + tgst_amt + other_charges - discount
+        grand_total = taxable_amt + tgst_amt
 
         date_obj = datetime.strptime(date, '%Y-%m-%d').date()
 
@@ -536,7 +536,7 @@ def add_invoice(request):
             cgst_amt=cgst_amt,
             tgst_amt=tgst_amt,
             grand_total=grand_total,
-            grand_total_words=str(grand_total)  # Convert to words if needed
+            grand_total_words=amount_to_words(grand_total)
         )
         invoice_obj.save()
         invoice_obj.invoice_items.set(invoice_items_arr)
@@ -553,3 +553,10 @@ def add_invoice(request):
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
 
+from num2words import num2words
+
+def amount_to_words(amount):
+    amount_words = num2words(amount, lang='en_IN', to='currency', currency='INR').replace(",", "")
+    amount_words = amount_words.capitalize()
+    amount_words += ' only'
+    return amount_words
