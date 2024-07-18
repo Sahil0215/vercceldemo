@@ -3,62 +3,66 @@
 <head>
     <title>Instabill | BUYER</title>
     <style>
-        /* td{
-            border: 2px;
-            border-color: black;
-            padding: 5px;
-            margin: 2px;
-        } */
-
-        /* hr{
-            height: 5px;
-            color: black;
-        } */
+        table {
+            width: 100%; /* Fix the width of the table */
+            table-layout: fixed; /* Ensures that the table uses fixed layout */
+            border-collapse: collapse; /* Ensures borders are merged */
+        }
+        th, td {
+            word-wrap: break-word; /* Allows content to wrap within cells */
+            padding: 8px; /* Adds some padding for readability */
+            border: 2px solid black; /* Ensures all borders are visible */
+        }
+        th {
+            background-color: #f2f2f2; /* Adds a background color to headers */
+        }
     </style>
 </head>
 <body>
     <a href=""><h1>INSTABILL</h1></a>
     <h1>Manage Buyer</h1>
     
-        <a href="{% url 'logout_page' %}">LOGOUT</a>
-        <hr height="5px" color="black">
-                <table border="2">
-                    <thead>
-                        <tr>
-                            <td>Name</td>
-                            <td>GST</td>
-                            <td>Phone</td>
-                            <td>Address</td>
-                            <td>Balance</td>
-                            <td>Action</td>
-                        </tr>
-                    </thead>
-                    {% for buyer in buyers %}
-        <tr>
-            <td>{{ buyer.name }}</td>
-            <td>{{ buyer.gst }}</td>
-            <td>{{ buyer.phone }}</td>
-            <td>{{ buyer.city }} , {{ buyer.state }}</td>
-            <td>{{ buyer.bal }}</td>
-            <td>
-                <form action="{% url 'delete_buyer' buyer.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this buyer?');">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-                </table>
-            </div>
-            {% if messages %}
-            <div style="color: rgb(0, 0, 0); text-align: center;">
-                {% for message in messages %}
-                {{ message }}
-                {% endfor %}
-            </div>
-            {% endif %}
-        
-        <a href="{% url 'add_buyer' %}"><button>Add Buyer</button></a>
+    <a href="{% url 'logout_page' %}">LOGOUT</a>
+    <hr style="height: 5px; background-color: black; border: none;">
     
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>GST</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Balance</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for buyer in buyers %}
+            <tr>
+                <td>{{ buyer.name }}</td>
+                <td>{{ buyer.gst }}</td>
+                <td>{{ buyer.phone }}</td>
+                <td>{{ buyer.city }}, {{ buyer.state }}</td>
+                <td>{{ buyer.bal }}</td>
+                <td>
+                    <form action="{% url 'delete_buyer' buyer.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this buyer?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if messages %}
+    <div style="color: rgb(0, 0, 0); text-align: center;">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <a href="{% url 'add_buyer' %}"><button>Add Buyer</button></a>
 </body>
 </html>
