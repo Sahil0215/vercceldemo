@@ -20,10 +20,11 @@
 </head>
 <body>
     <a href=""><h1>INSTABILL</h1></a>
-    <h1>Manage Buyer</h1>
+    <center><h1>Manage Buyer</h1></center>
     
     <a href="{% url 'logout_page' %}">LOGOUT</a>
     <hr style="height: 5px; background-color: black; border: none;">
+    <br>
     
     <table>
         <thead>
@@ -62,7 +63,9 @@
         {% endfor %}
     </div>
     {% endif %}
+
+    <br><br>
     
-    <a href="{% url 'add_buyer' %}"><button>Add Buyer</button></a>
+    <center><a href="{% url 'add_buyer' %}"><button>Add Buyer</button></a></center>
 </body>
 </html>
