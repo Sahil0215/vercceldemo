@@ -464,38 +464,43 @@ def print_invoice(request, invoice_id):
 
 
 
+from decimal import Decimal
+from datetime import datetime
+
 @login_required(login_url="/login_page/")
 def add_invoice(request):
     if request.method == "POST":
-        invoice_from_id=request.POST.get('invoice_from')
-        invoice_to_id=request.POST.get('invoice_to')
-        date=request.POST.get('date')
-        eway=request.POST.get('eway')
-        transport=request.POST.get('transport')
-        vehicle_no=request.POST.get('vehicle_no')
-        no_of_items=int(request.POST.get('no_of_items'))
-        other_charges=request.POST.get('other_charges')
-        discount=request.POST.get('discount')
+        invoice_from_id = request.POST.get('invoice_from')
+        invoice_to_id = request.POST.get('invoice_to')
+        date = request.POST.get('date')
+        eway = request.POST.get('eway')
+        transport = request.POST.get('transport')
+        vehicle_no = request.POST.get('vehicle_no')
+        no_of_items = int(request.POST.get('no_of_items'))
+        other_charges = Decimal(request.POST.get('other_charges', '0.00'))
+        discount = Decimal(request.POST.get('discount', '0.00'))
 
-        invoice_from=seller.objects.get(id=invoice_from_id)
-        invoice_to=buyer.objects.get(id=invoice_to_id)
+        invoice_from = seller.objects.get(id=invoice_from_id)
+        invoice_to = buyer.objects.get(id=invoice_to_id)
         
-        invoice_from.bill_count=invoice_from.bill_count+1
+        invoice_from.bill_count += 1
         invoice_from.save()
 
-        invoice_no=invoice_from.bill_count
-        taxable_amt,avg_sgst,avg_cgst=0,0,0
+        invoice_no = invoice_from.bill_count
+        taxable_amt = Decimal('0.00')
+        avg_sgst = Decimal('0.00')
+        avg_cgst = Decimal('0.00')
 
-        invoice_items_arr =[]
-        for i in range(1,no_of_items+1):
-            item_details_id=request.POST.get('item'+str(i))
-            item_details=item.objects.get(id=item_details_id)
-            quantity=float(request.POST.get('quantity'+str(i)))
-            rate=float(request.POST.get('rate'+str(i)))
-            amount=quantity*rate
-            taxable_amt+=amount
-            avg_sgst+=item_details.sgst
-            avg_cgst+=item_details.cgst
+        invoice_items_arr = []
+        for i in range(1, no_of_items + 1):
+            item_details_id = request.POST.get('item' + str(i))
+            item_details = item.objects.get(id=item_details_id)
+            quantity = int(request.POST.get('quantity' + str(i)))
+            rate = Decimal(request.POST.get('rate' + str(i)))
+            amount = quantity * rate
+            taxable_amt += amount
+            avg_sgst += item_details.sgst
+            avg_cgst += item_details.cgst
 
             billedItem_object = billedItem(
                 item_details=item_details,
@@ -506,17 +511,19 @@ def add_invoice(request):
             billedItem_object.save()
             invoice_items_arr.append(billedItem_object)
 
+        avg_sgst = avg_sgst / no_of_items
+        avg_cgst = avg_cgst / no_of_items
+        sgst_amt = (taxable_amt * avg_sgst) / Decimal('100.00')
+        cgst_amt = (taxable_amt * avg_cgst) / Decimal('100.00')
+        tgst_amt = sgst_amt + cgst_amt
+        grand_total = taxable_amt + tgst_amt + other_charges - discount
 
-        sgst_amt=(taxable_amt*(avg_sgst/no_of_items))/100
-        cgst_amt=(taxable_amt*(avg_cgst/no_of_items))/100
-        tgst_amt=sgst_amt+cgst_amt
-        grand_total=taxable_amt+tgst_amt
+        date_obj = datetime.strptime(date, '%Y-%m-%d').date()
 
-
-        invoice_obj=invoice(
+        invoice_obj = invoice(
             invoice_from=invoice_from,
             invoice_no=invoice_no,
-            date=date,
+            date=date_obj,
             eway=eway,
             transport=transport,
             vehicle_no=vehicle_no,
@@ -528,7 +535,8 @@ def add_invoice(request):
             sgst_amt=sgst_amt,
             cgst_amt=cgst_amt,
             tgst_amt=tgst_amt,
-            grand_total=grand_total
+            grand_total=grand_total,
+            grand_total_words=str(grand_total)  # Convert to words if needed
         )
         invoice_obj.save()
         invoice_obj.invoice_items.set(invoice_items_arr)
@@ -539,6 +547,7 @@ def add_invoice(request):
         buyers = buyer.objects.all()
         items = item.objects.all()
         return render(request, 'add_invoice.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
+
     
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
