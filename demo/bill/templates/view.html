@@ -107,12 +107,13 @@
                     <b>GSTIN :  {{ bill.invoice_to.gst }}</b>
                 </td>
                 <td colspan="6" style="text-align:left; font-size: 13px;" >
-                    <i><u>Shipped To:</u></i><br>
+                    <i><u>Billed To:</u></i><br>
                     <b>{{ bill.invoice_to.name }}</b><br>
                     {{ bill.invoice_to.add }}<br>
-                    {{ bill.invoice_to.email }}<br>
-                    {{ bill.invoice_to.phone }}<br>
-                    <b>{{ bill.invoice_to.gst }}</b>
+                    {{ bill.invoice_to.city }}, {{ bill.invoice_to.state }}<br>
+                    Email :{{ bill.invoice_to.email }}<br>
+                    Phone No. :{{ bill.invoice_to.phone }}<br>
+                    <b>GSTIN :  {{ bill.invoice_to.gst }}</b>
                 </td>
             </tr>
             <tr class="bold">
@@ -131,10 +132,10 @@
                 <td class="no-border" style="width: 10px;"></td>
                 <td colspan="5" class="no-border">{{ billed_item.item_details.name }}</td>
                 <td class="no-border">{{ billed_item.item_details.hsn }}</td>
-                <td class="no-border">{{ billed_item.quantity }}</td>
+                <td class="no-border">{{ billed_item.quantity }} KG</td>
                 <td class="no-border">{{ billed_item.rate }}</td>
-                <td class="no-border">9%</td>
-                <td class="no-border">9%</td>
+                <td class="no-border">{{ billed_item.item_details.sgst}}%</td>
+                <td class="no-border">{{ billed_item.item_details.cgst}}%<td>
                 <td class="no-border-left">{{ billed_item.amount }}</td>
             </tr>
             {% endfor %}
