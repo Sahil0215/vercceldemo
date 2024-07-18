@@ -55,7 +55,7 @@ class employee(models.Model):
     state = models.CharField(max_length=20, blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
     bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    aadhaar = models.IntegerField(default=0)
+    aadhaar = models.CharField(max_length=15)
 
     def __str__(self):
         return self.name
