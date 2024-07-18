@@ -311,7 +311,7 @@ def delete_item(request, item_id):
     item_obj= get_object_or_404(item, id=item_id)
     if request.method == 'POST':
         item_obj.delete()
-        return redirect("/manage_item/")
+        return redirect('manage_item')
     return render(request, 'manage_item.html', {'item': item})
 
 
