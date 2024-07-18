@@ -66,7 +66,7 @@ class item(models.Model):
     hsn = models.CharField(max_length=7)
     sgst = models.DecimalField(max_digits=5, decimal_places=2)
     cgst = models.DecimalField(max_digits=5, decimal_places=2)
-    quantity = models.IntegerField(default=0)
+    stock = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

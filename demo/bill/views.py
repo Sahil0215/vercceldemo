@@ -453,6 +453,11 @@ def delete_invoice(request, invoice_id):
     invoice_obj= get_object_or_404(invoice, id=invoice_id)
     invoice_obj.invoice_to.bal-=invoice_obj.grand_total
     invoice_obj.invoice_to.save()
+
+
+    invoice_obj.invoice_items.item_details.stock+=invoice_obj.invoice_items.quantity
+    invoice_obj.invoice_items.item_details.save()
+
     if request.method == 'POST':
         invoice_obj.delete()
         return redirect('manage_invoice')
@@ -512,6 +517,11 @@ def add_invoice(request):
                 unit=unit,
                 amount=amount
             )
+
+            item_details.stock-=quantity
+            item_details.save()
+
+
             billedItem_object.save()
             invoice_items_arr.append(billedItem_object)
         taxable_amt+=other_charges-discount
@@ -545,6 +555,9 @@ def add_invoice(request):
 
         invoice_to.bal+=grand_total
         invoice_to.save()
+        
+        
+        
 
         invoice_obj.save()
         invoice_obj.invoice_items.set(invoice_items_arr)
