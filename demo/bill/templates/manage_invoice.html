@@ -125,7 +125,7 @@
                     {% csrf_token %}
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this invoice?');">Delete</button>
                     <!-- ADD PRINT BUTTON WHICH  -->
-                    <a href="{% url 'print_invoice' invoice.id %}"><button>Print</button></a>
+                    <a href="{% url 'print_invoice' invoice.id %}">Print</a>
                 </form>
             </td>
         </tr>
