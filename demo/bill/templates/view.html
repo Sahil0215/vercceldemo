@@ -101,9 +101,10 @@
                     <i><u>Billed To:</u></i><br>
                     <b>{{ bill.invoice_to.name }}</b><br>
                     {{ bill.invoice_to.add }}<br>
-                    {{ bill.invoice_to.email }}<br>
-                    {{ bill.invoice_to.phone }}<br>
-                    <b>{{ bill.invoice_to.gst }}</b>
+                    {{ bill.invoice_to.city }}, {{ bill.invoice_to.state }}<br>
+                    Email :{{ bill.invoice_to.email }}<br>
+                    Phone No. :{{ bill.invoice_to.phone }}<br>
+                    <b>GSTIN :  {{ bill.invoice_to.gst }}</b>
                 </td>
                 <td colspan="6" style="text-align:left; font-size: 13px;" >
                     <i><u>Shipped To:</u></i><br>
