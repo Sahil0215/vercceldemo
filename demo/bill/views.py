@@ -91,82 +91,6 @@ def home(request):
     employee_count=len(employee.objects.all())
     return render(request, "home.html", { 'seller_count': seller_count, 'buyer_count':buyer_count, 'item_count':item_count, 'employee_count':employee_count } )
 
-@login_required(login_url="/login_page/")
-def manage(request):
-    return render(request, "manage.html")
-
-@login_required(login_url="/login_page/")
-def generate(request):
-    if request.method == "POST":
-        date = request.POST.get('date')
-        invoice_from_id = request.POST.get('invoice_from')
-        invoice_to_id = request.POST.get('invoice_to')
-        no_of_items = request.POST.get('no_of_items')
-        rate_of_each_item = request.POST.get('rate_of_each_item')
-        qty_of_each_item = request.POST.get('qty_of_each_item')
-        eway = request.POST.get('eway')
-        vehicle_no = request.POST.get('vehicle_no')
-        grand_total = request.POST.get('grand_total')
-
-        try:
-            # Fetch the seller and buyer objects
-            invoice_from = get_object_or_404(seller, id=invoice_from_id)
-            invoice_to = get_object_or_404(buyer, id=invoice_to_id)
-
-            # Generate the invoice number
-            invoice_no = invoice_from.invoice_count + 1
-
-            # Create the invoice object
-            invoice_object = invoice(
-                invoice_no=invoice_no,
-                date=date,
-                invoice_from=invoice_from,
-                invoice_to=invoice_to,
-                no_of_items=no_of_items,
-                rate_of_each_item=rate_of_each_item,
-                qty_of_each_item=qty_of_each_item,
-                eway=eway,
-                vehicle_no=vehicle_no,
-                grand_total=grand_total
-            )
-
-            # Save the invoice object
-            invoice_object.save()
-
-            # Update the invoice count for the seller
-            invoice_from.invoice_count += 1
-            invoice_from.save()
-
-            return redirect("/view/")
-
-        except seller.DoesNotExist:
-            return render(request, 'generate.html', {
-                'error_message': 'Seller does not exist.',
-                'sellers': seller.objects.all(),
-                'buyers': buyer.objects.all(),
-                'items': item.objects.all()
-            })
-        except buyer.DoesNotExist:
-            return render(request, 'generate.html', {
-                'error_message': 'Buyer does not exist.',
-                'sellers': seller.objects.all(),
-                'buyers': buyer.objects.all(),
-                'items': item.objects.all()
-            })
-        except Exception as e:
-            return render(request, 'generate.html', {
-                'error_message': str(e),
-                'sellers': seller.objects.all(),
-                'buyers': buyer.objects.all(),
-                'items': item.objects.all()
-            })
-
-    else:
-        sellers = seller.objects.all()
-        buyers = buyer.objects.all()
-        items = item.objects.all()
-        return render(request, 'generate.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
-
 
 @login_required(login_url="/login_page/")
 def view(request):
@@ -180,38 +104,12 @@ def view(request):
 def entry(request):
     return render(request, "entry.html")
 
-@login_required(login_url="/login_page/")
-def generatesuccess(request):
-    return render(request, "generatesuccess.html")
 
 
 
 
 
 
-
-
-
-@login_required(login_url="/login_page/")
-def manage_invoice(request):
-    return render(request, "manage_invoice.html")
-
-
-#Manage Page Functions
-@login_required(login_url="/login_page/")
-def additem(request):
-    if request.method=="post":
-        hsn=request.POST.get('hsn')
-        name=request.POST.get('name')
-        tax=request.POST.get('tax')
-
-        item_object=item.object.create(
-            hsn=hsn,
-            name=name,
-            tax=tax,
-        )
-
-        item_object.save()
 
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B U Y E R - - - - S T A R T  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
@@ -337,7 +235,7 @@ def add_employee(request):
         city = request.POST.get('city')
         state = request.POST.get('state')
         email = request.POST.get('email')
-        bal = request.POST.get('bal')
+        bal = request.POST.get('bal',0)
         aadhaar = request.POST.get('aadhaar')
         
         
