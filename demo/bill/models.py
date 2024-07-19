@@ -34,7 +34,7 @@ class seller(models.Model):
     bill_count = models.IntegerField(default=0)
     bank_name = models.CharField(max_length=30)
     bank_ac_no = models.CharField(max_length=25)
-    bank_ifsc = models.CharField(max_length=10)
+    bank_ifsc = models.CharField(max_length=20)
     bank_branch = models.CharField(max_length=20)
 
     def __str__(self):
