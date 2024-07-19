@@ -40,7 +40,7 @@ class seller(models.Model):
     phone = models.CharField(max_length=15)
     email = models.CharField(max_length=50, blank=True, null=True)
     bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    bank_details= models.ForeignKey(bank, on_delete=models.CASCADE , blank=True, null=True)
+    bank_details= models.OneToOneField(bank,  on_delete=models.CASCADE , blank=True, null=True)
     bill_count = models.IntegerField(default=0)
 
     def __str__(self):

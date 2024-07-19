@@ -294,34 +294,51 @@ def add_employee(request):
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - S T A R T * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
+
+
+
+@login_required(login_url="/login_page/")
+def manage_bank(request):
+    banks=bank.objects.all()
+    if len(banks)==0:
+        messages.info(request, 'No Bank Account Found')
+        return render(request, "manage_bank.html")
+    return render(request, "manage_bank.html", {'banks':banks})
+
+
+@login_required(login_url="/login_page/")
+def delete_bank(request, bank_id):
+    bank_obj= get_object_or_404(bank, id=bank_id)
+    if request.method == 'POST':
+        bank_obj.delete()
+        return redirect('manage_bank')
+    return render(request, 'manage_bank.html', {'bank': bank})
+
+
+
+
 @login_required(login_url="/login_page/")
 def add_bank(request):
     if request.method == "POST":
-        s_gst_id = request.POST.get('s_gst')
         name = request.POST.get('name')
         ac_no = request.POST.get('ac_no')
         branch = request.POST.get('branch')
         ifsc = request.POST.get('ifsc')
 
-        try:
-            s_gst = seller.objects.get(id=s_gst_id)
-        except seller.DoesNotExist:
-            return HttpResponse(f"Seller with ID {s_gst_id} does not exist.")
-
+        
         bank_object = bank(
             name=name,
             ac_no=ac_no,
             branch=branch,
             ifsc=ifsc
         )
+        bank_object.save()
 
-        s_gst.bank_details = bank_object
-        s_gst.save()
 
         return redirect("/manage_seller/")
     else:
         sellers = seller.objects.all()
-        return render(request, 'add_bank.html', {'sellers': sellers})
+        return render(request, 'add_bank.html')
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
@@ -493,14 +510,10 @@ def add_invoice(request):
 
         invoice_to.bal+=grand_total
         invoice_to.save()
-        
-        
-        
 
         invoice_obj.save()
         invoice_obj.invoice_items.set(invoice_items_arr)
 
-        
         return redirect("/manage_invoice/")
     else:
         sellers = seller.objects.all()

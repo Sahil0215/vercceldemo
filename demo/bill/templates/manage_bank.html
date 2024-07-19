@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Instabill | BANK</title>
+    <style>
+        table {
+            width: 100%; /* Fix the width of the table */
+            table-layout: fixed; /* Ensures that the table uses fixed layout */
+            border-collapse: collapse; /* Ensures borders are merged */
+        }
+        th, td {
+            word-wrap: break-word; /* Allows content to wrap within cells */
+            padding: 8px; /* Adds some padding for readability */
+            border: 2px solid black; /* Ensures all borders are visible */
+        }
+        th {
+            background-color: #f2f2f2; /* Adds a background color to headers */
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}"><h1>INSTABILL</h1></a>
+    <center><h1>Manage Bank</h1></center>
+    
+    <a href="{% url 'logout_page' %}">LOGOUT</a>
+    <hr style="height: 5px; background-color: black; border: none;">
+    <br>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>A/C Number</th>
+                <th>IFSC CODE</th>
+                <th>Branch</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bank in banks %}
+            <tr>
+                <td>{{ bank.name }}</td>
+                <td>{{ bank.ac_no }}</td>
+                <td>{{ bank.ifsc }}</td>
+                <td>{{ bank.branch }}</td>
+                <td>
+                    <form action="{% url 'delete_bank' bank.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this bank?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if messages %}
+    <div style="color: rgb(0, 0, 0); text-align: center;">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <br><br>
+    
+    <center><a href="{% url 'add_bank' %}"><button>Add Bank</button></a></center>
+</body>
+</html>
