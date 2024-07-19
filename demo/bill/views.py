@@ -315,9 +315,9 @@ def addbank(request):
         s_gst.bank_details=bank_object
         bank_object.save()
         s_gst.save()
-        return redirect("/generatesuccess/")
+        return redirect("/manage_seller/")
     else:
-        return render(request, "manage.html")
+        return render(request, "add_bank.html")
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
