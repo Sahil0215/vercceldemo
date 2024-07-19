@@ -69,8 +69,6 @@ def deleteallusers(request):
     i.delete()
     e=employee.objects.all()
     e.delete()
-    ban=bank.objects.all()
-    ban.delete()
     bil=invoice.objects.all()
     bil.delete()
     user=users_copy.objects.all()
