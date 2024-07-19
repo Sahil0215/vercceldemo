@@ -296,6 +296,7 @@ def add_employee(request):
 
 @login_required(login_url="/login_page/")
 def add_bank(request):
+    sellers = seller.objects.all()
     if request.method == "POST":
         s_gst_id = request.POST.get('s_gst')  # Assuming you're passing the seller ID
         name = request.POST.get('name')
@@ -311,7 +312,6 @@ def add_bank(request):
             branch=branch,
             ifsc=ifsc
         )
-        sellers = seller.objects.all()
         s_gst.bank_details=bank_object
         bank_object.save()
         s_gst.save()
