@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Bank Details</title>
+</head>
+<body>
+    <h1>Add Bank Details</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <label>Select Seller :</label>
+        <select name="invoice_from" onchange="checkAddOption(this)" required>
+            {% for s in sellers %}
+            <option value="{{ s.id }}">{{ s.name}}</option>
+            {% endfor %}
+            <option value="add_seller">Add Seller</option>
+        </select>
+        <br>
+
+        <label>Bank Name: </label>
+        <input type="text" name="name" required><br>
+   
+        <label>Enter A/C Number: </label>
+        <input type="text" name="ac_no" required><br>
+        
+        <label>Enter IFSC Code: </label>
+        <input type="text" name="ifsc"><br>
+        
+        <label>Enter Bank's Branch: </label>
+        <input type="text" name="branch"><br>
+        
+        <button type="submit">Generate Bill</button>
+    </form>
+
+    <script>
+        function checkAddOption(selectElement) {
+            if (selectElement.value === "add_seller") {
+                window.location.href = "/add_seller/";
+            }
+        }
+    </script>
+</body>
+</html>

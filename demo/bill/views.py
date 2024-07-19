@@ -303,17 +303,18 @@ def addbank(request):
         branch = request.POST.get('branch')
         ifsc = request.POST.get('ifsc')
 
-        s_gst = seller.objects.get(id=s_gst_id)  # Get the seller object
+        s_gst = seller.objects.get(id=s_gst_id)
 
         bank_object = bank.objects.create(
-            s_gst=s_gst,
             name=name,
             ac_no=ac_no,
             branch=branch,
             ifsc=ifsc
         )
 
+        s_gst.bank_details=bank_object
         bank_object.save()
+        s_gst.save()
         return redirect("/generatesuccess/")
     else:
         return render(request, "manage.html")
