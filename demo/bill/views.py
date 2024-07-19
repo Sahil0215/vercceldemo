@@ -346,9 +346,8 @@ def add_item(request):
     if request.method == "POST":
         hsn=request.POST.get('hsn')
         name=request.POST.get('name')
-        tax=int(request.POST.get('tax'))
-        sgst=tax/2
-        cgst=sgst
+        sgst=Decimal(request.POST.get('sgst'))
+        cgst=Decimal(request.POST.get('cgst'))
         stock=int(request.POST.get('stock'))
         item_object = item(
             hsn=hsn,
@@ -514,5 +513,5 @@ from num2words import num2words
 def amount_to_words(amount):
     amount_words = num2words(amount, lang='en_IN', to='currency', currency='INR').replace(",", "")
     amount_words = amount_words.capitalize()
-    amount_words += "only"
+    amount_words += " only"
     return amount_words
