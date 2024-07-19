@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Invoice</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
     <style>
         table {
             border-collapse: collapse;
@@ -71,10 +72,10 @@
     </style>
 </head>
 <body>
-    <form method="post" action="">
-        {% csrf_token %}
-
-        <table>
+        <center>
+            <button id="download">Download</button>
+        </center>
+        <table id="invoice">
             <tbody>
                 <tr class="bold">
                 <td colspan="4" class="no-border-right" style="text-align: left; padding-left:10px;">GSTIN: {{ bill.invoice_from.gst }}</td>
@@ -220,6 +221,14 @@
                 </tr>
             </tbody>
         </table>
-    </form>
+        <script>
+            window.onload=function(){
+                document.getElementById("download")
+                .addEventListener("click" ,()=>{
+                    const invoice=this.document.getElementById("invoice");
+                    html2pdf().from(invoice).save();
+                })
+            }
+        </script>
     </body>
     </html>
