@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
@@ -303,7 +303,10 @@ def add_bank(request):
         branch = request.POST.get('branch')
         ifsc = request.POST.get('ifsc')
 
-        s_gst = seller.objects.get(id=s_gst_id)
+        try:
+            s_gst = seller.objects.get(id=s_gst_id)
+        except seller.DoesNotExist:
+            return HttpResponse(f"Seller with ID {s_gst_id} does not exist.")
 
         bank_object = bank.objects.create(
             name=name,
@@ -312,13 +315,12 @@ def add_bank(request):
             ifsc=ifsc
         )
 
-
         s_gst.bank_details = bank_object
         s_gst.save()
 
         return redirect("/manage_seller/")
     else:
-        sellers = seller.objects.all() 
+        sellers = seller.objects.all()
         return render(request, 'add_bank.html', {'sellers': sellers})
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
