@@ -303,8 +303,8 @@ def add_bank(request):
         ac_no = request.POST.get('ac_no')
         branch = request.POST.get('branch')
         ifsc = request.POST.get('ifsc')
+        s_gst = get_object_or_404(seller, id=s_gst_id)
 
-        s_gst = seller.objects.get(id=s_gst_id)
 
         bank_object = bank.objects.create(
             name=name,
