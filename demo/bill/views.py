@@ -312,8 +312,8 @@ def add_bank(request):
             branch=branch,
             ifsc=ifsc
         )
-        s_gst.bank_details=bank_object
         bank_object.save()
+        s_gst.bank_details=bank_object
         s_gst.save()
         return redirect("/manage_seller/")
     else:
