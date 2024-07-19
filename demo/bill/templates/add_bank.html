@@ -10,8 +10,8 @@
     <form method="post">
         {% csrf_token %}
         
-        <label>Select Seller :</label>
-        <select name="invoice_from" onchange="checkAddOption(this)" required>
+        <label>Select Seller: </label>
+        <select name="s_gst" onchange="checkAddOption(this)" required>
             {% for s in sellers %}
             <option value="{{ s.id }}">{{ s.name}}</option>
             {% endfor %}
