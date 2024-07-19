@@ -214,6 +214,10 @@ def add_seller(request):
         state = request.POST.get('state')
         email = request.POST.get('email', '')
         bal = request.POST.get('bal', 0)
+        bank_name = request.POST.get('bank_name')
+        bank_ac_no = request.POST.get('bank_ac_no')
+        bank_branch = request.POST.get('bank_branch')
+        bank_ifsc = request.POST.get('bank_ifsc')
 
         new_seller = seller(
             name=name,
@@ -223,7 +227,11 @@ def add_seller(request):
             city=city,
             state=state,
             email=email,
-            bal=bal
+            bal=bal,
+            bank_name=bank_name,
+            bank_ac_no=bank_ac_no,
+            bank_branch=bank_branch,
+            bank_ifsc=bank_ifsc
         )
         new_seller.save()
         return redirect('/manage_seller/')
@@ -290,57 +298,6 @@ def add_employee(request):
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * E M P L O Y E E - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
-
-
-# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - S T A R T * * * * * * * * * * * * * * * * * * * * * * * * * *  *
-
-
-
-
-@login_required(login_url="/login_page/")
-def manage_bank(request):
-    banks=bank.objects.all()
-    if len(banks)==0:
-        messages.info(request, 'No Bank Account Found')
-        return render(request, "manage_bank.html")
-    return render(request, "manage_bank.html", {'banks':banks})
-
-
-@login_required(login_url="/login_page/")
-def delete_bank(request, bank_id):
-    bank_obj= get_object_or_404(bank, id=bank_id)
-    if request.method == 'POST':
-        bank_obj.delete()
-        return redirect('manage_bank')
-    return render(request, 'manage_bank.html', {'bank': bank})
-
-
-
-
-@login_required(login_url="/login_page/")
-def add_bank(request):
-    if request.method == "POST":
-        name = request.POST.get('name')
-        ac_no = request.POST.get('ac_no')
-        branch = request.POST.get('branch')
-        ifsc = request.POST.get('ifsc')
-
-        
-        bank_object = bank(
-            name=name,
-            ac_no=ac_no,
-            branch=branch,
-            ifsc=ifsc
-        )
-        bank_object.save()
-
-
-        return redirect("/manage_seller/")
-    else:
-        sellers = seller.objects.all()
-        return render(request, 'add_bank.html')
-    
-# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I T E M   - - - - S T A R T  * * * * * * * * * * * * * * * * * * * * * * * * * * *
 

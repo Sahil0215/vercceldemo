@@ -22,15 +22,6 @@ class buyer(models.Model):
     def __str__(self):
         return self.name
 
-class bank(models.Model):
-    name = models.CharField(max_length=30)
-    ac_no = models.CharField(max_length=25)
-    ifsc = models.CharField(max_length=10)
-    branch = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name + " => " + str(self.s_gst)
-
 class seller(models.Model):
     gst = models.CharField(max_length=20)
     name = models.CharField(max_length=50)
@@ -40,8 +31,11 @@ class seller(models.Model):
     phone = models.CharField(max_length=15)
     email = models.CharField(max_length=50, blank=True, null=True)
     bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    bank_details= models.OneToOneField(bank,  on_delete=models.CASCADE , blank=True, null=True)
     bill_count = models.IntegerField(default=0)
+    bank_name = models.CharField(max_length=30)
+    bank_ac_no = models.CharField(max_length=25)
+    bank_ifsc = models.CharField(max_length=10)
+    bank_branch = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name

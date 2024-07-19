@@ -24,10 +24,6 @@ urlpatterns = [
     path('add_seller/', views.add_seller, name="add_seller"),
     path('delete_seller/<int:seller_id>/', views.delete_seller, name="delete_seller"),
 
-    path('manage_bank/', views.manage_bank, name="manage_bank"),
-    path('add_bank/', views.add_bank, name="add_bank"),
-    path('delete_bank/<int:bank_id>/', views.delete_bank, name="delete_bank"),
-
     path('manage_employee/', views.manage_employee, name="manage_employee"),
     path('add_employee/', views.add_employee, name="add_employee"),
     path('delete_employee/<int:employee_id>/', views.delete_employee, name="delete_employee"),
