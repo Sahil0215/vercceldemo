@@ -296,14 +296,14 @@ def add_employee(request):
 
 @login_required(login_url="/login_page/")
 def add_bank(request):
-    sellers = seller.objects.all()
+    # sellers = seller.objects.all()
     if request.method == "POST":
         s_gst_id = request.POST.get('s_gst')  # Assuming you're passing the seller ID
         name = request.POST.get('name')
         ac_no = request.POST.get('ac_no')
         branch = request.POST.get('branch')
         ifsc = request.POST.get('ifsc')
-        s_gst = get_object_or_404(seller, id=s_gst_id)
+        # s_gst = get_object_or_404(seller, id=s_gst_id)
 
 
         bank_object = bank.objects.create(
@@ -313,11 +313,11 @@ def add_bank(request):
             ifsc=ifsc
         )
         bank_object.save()
-        s_gst.bank_details=bank_object
-        s_gst.save()
+        # s_gst.bank_details=bank_object
+        # s_gst.save()
         return redirect("/manage_seller/")
     else:
-        return render(request, 'add_bank.html' , {'sellers' : sellers} )
+        return render(request, 'add_bank.html'  )
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
