@@ -308,7 +308,7 @@ def add_bank(request):
         except seller.DoesNotExist:
             return HttpResponse(f"Seller with ID {s_gst_id} does not exist.")
 
-        bank_object = bank.objects.create(
+        bank_object = bank(
             name=name,
             ac_no=ac_no,
             branch=branch,
