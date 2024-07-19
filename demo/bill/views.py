@@ -295,7 +295,7 @@ def add_employee(request):
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - S T A R T * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
 @login_required(login_url="/login_page/")
-def addbank(request):
+def add_bank(request):
     if request.method == "POST":
         s_gst_id = request.POST.get('s_gst')  # Assuming you're passing the seller ID
         name = request.POST.get('name')
