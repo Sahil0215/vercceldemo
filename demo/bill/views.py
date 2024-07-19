@@ -317,7 +317,7 @@ def add_bank(request):
         s_gst.save()
         return redirect("/manage_seller/")
     else:
-        return render(request, "add_bank.html" , {'sellers' : sellers} )
+        return render(request, 'add_bank.html' , {'sellers' : sellers} )
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
