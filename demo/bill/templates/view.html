@@ -89,15 +89,15 @@
             </tr>
             <tr >
                 <td colspan="6" style="text-align:left; font-size: 13px;" >
-                    Invoice No:{{bill.invoice_no}}<br>
-                    Date of Invoice: {{bill.date}}<br>
+                    Invoice No: <b>{{bill.invoice_no}}</b><br>
+                    Date of Invoice: <b>{{bill.date}}</b><br>
                     Place of Supply: {{bill.invoice_to.state}}<br>
                     E-Way Bill : {{bill.eway}}
                 </td>
                 <td colspan="6" style="text-align:left; font-size: 13px;" >
                     P O No.:<br>
                     TRANSPORT NO.: {{ bill.transport }} <br>
-                    VEHICLE NO: {{ bill.vehicle_no }} <br><br>
+                    VEHICLE NO: <b>{{ bill.vehicle_no }}</b> <br><br>
                 </td>
             </tr>
             <tr >
@@ -111,7 +111,7 @@
                     <b>GSTIN :  {{ bill.invoice_to.gst }}</b>
                 </td>
                 <td colspan="6" style="text-align:left; font-size: 13px;" >
-                    <i><u>Billed To:</u></i><br>
+                    <i><u>Shipped To:</u></i><br>
                     <b>{{ bill.invoice_to.name }}</b><br>
                     {{ bill.invoice_to.add }}<br>
                     {{ bill.invoice_to.city }}, {{ bill.invoice_to.state }}<br>
@@ -207,15 +207,15 @@
                 <td colspan="7" style="font-size: 13px;">{{bill.grand_total_words}}</td><td colspan="5">GRAND TOTAL : {{bill.grand_total}} </td>
             </tr>
             <tr class = "terms_and_condition">
-                <td colspan="7" style="text-align: left;">
+                <td colspan="7" style="text-align: right;">
                     <u><i>Terms & Conditions</i></u><br>
                     Goods once sold will not be taken back or exchanged.<br>
                     Bills not paid due date will attract 24% interest.<br>
                     All disputes subject to Jurisdication only.<br>
                     Prescribed Sales Tax declaration will be given.<br>
                     --------------------------------------------------------------------------------<br>
-                    Receiver Signature</td>
-                    <td colspan="5"><b>For SHRI KHATU SHYAM PLASTIC</b><br><br><br><br><br>Authority Sign</td>
+                    Receiver's Signature</td>
+                    <td colspan="5"><b>For SHRI KHATU SHYAM PLASTIC</b><br><br><br><br><br>Authorized Signature</td>
                 </tr>
             </tbody>
         </table>
