@@ -311,14 +311,13 @@ def add_bank(request):
             branch=branch,
             ifsc=ifsc
         )
-        seller_obj=seller.objects.all()
-
+        sellers = seller.objects.all()
         s_gst.bank_details=bank_object
         bank_object.save()
         s_gst.save()
         return redirect("/manage_seller/")
     else:
-        return render(request, "add_bank.html" , {'sellers' : seller_obj})
+        return render(request, "add_bank.html" , {'sellers' : sellers} )
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B  A N K  - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
