@@ -7,31 +7,19 @@ from .models import *
 
 
 # Create your views here.
+
+
+
+
+
+
+
+
+
+
+# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * A U T H E N T I C A  T I O N ---- S T A R T   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 def main(request):
     return render(request, "main.html")
-
-def login_page(request):
-    if request.method == "POST":
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-
-        if not User.objects.filter(username= username).exists():
-            messages.error(request, 'Invaild Username')
-            return redirect('/login_page/')
-        user=authenticate(username=username, password=password)
-
-        if user is None:
-            messages.error(request, 'Invaild Password')
-            return redirect('/login_page/')
-        
-        else:
-            login(request,user)
-            return redirect('/home/')
-    return render(request, 'login.html')
-
-def logout_page(request):
-    logout(request)
-    return redirect('/')
 
 def register(request):
     if request.method == "POST":
@@ -59,27 +47,34 @@ def register(request):
         return redirect('/registersuccess/')
     return render(request, 'register.html')
 
-@login_required(login_url="/login_page/")
-def deleteallusers(request):
-    s=seller.objects.all()
-    s.delete()
-    b=buyer.objects.all()
-    b.delete()
-    i=item.objects.all()
-    i.delete()
-    e=employee.objects.all()
-    e.delete()
-    bil=invoice.objects.all()
-    bil.delete()
-    user=users_copy.objects.all()
-    user.delete()
-    user=User.objects.all()
-    user.delete()
-    return redirect('/logout_page/')
 
 def registersuccess(request):
     return render(request, "registersuccess.html")
 
+
+def login_page(request):
+    if request.method == "POST":
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+
+        if not User.objects.filter(username= username).exists():
+            messages.error(request, 'Invaild Username')
+            return redirect('/login_page/')
+        user=authenticate(username=username, password=password)
+
+        if user is None:
+            messages.error(request, 'Invaild Password')
+            return redirect('/login_page/')
+        
+        else:
+            login(request,user)
+            return redirect('/home/')
+    return render(request, 'login.html')
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('/')
 
 @login_required(login_url="/login_page/")
 def home(request):
@@ -91,155 +86,14 @@ def home(request):
 
 
 @login_required(login_url="/login_page/")
-def view(request):
-    invoices=invoice.objects.all()
-    if len(invoices)==0:
-        messages.info(request, 'No invoice Found')
-        return render(request, "view.html")
-    return render(request, "view.html", {'invoices':invoices})
+def deleteallusers(request):
+    user=users_copy.objects.all()
+    user.delete()
+    user=User.objects.all()
+    user.delete()
+    return redirect('/logout_page/')
 
-
-
-
-@login_required(login_url="/login_page/")
-def entry(request):
-    return render(request, "entry.html")
-
-
-@login_required(login_url="/login_page/")
-def manage_entry_payment(request):
-    entry_payment_obj=entry_payment.objects.all()
-    if len(entry_payment_obj)==0:
-        messages.info(request, 'No Entries Found')
-        return render(request, "manage_entry_payment.html")
-    return render(request, "manage_entry_payment", {'payment':entry_payment_obj})
-
-
-@login_required(login_url="/login_page/")
-def delete_entry_payment(request, payment_id):
-    payment_obj= get_object_or_404(entry_payment, id=payment_id)
-    if request.method == 'POST':
-        payment_obj.delete()
-        return redirect('manage_entry_payment')
-    return render(request, 'manage_entry_payment.html', {'payment': entry_payment})
-
-
-@login_required(login_url="/login_page/")
-def add_entry_payment(request):
-    if request.method == "POST":
-        person_type = request.POST.get('person_type') 
-        name_id = request.POST.get('name')
-
-        if person_type=="seller":
-            name = seller.objects.get(id=name_id)
-        elif person_type=="buyer":
-            name = buyer.objects.get(id=name_id)
-        elif person_type=="employee":
-            name = employee.objects.get(id=name_id)
-
-
-
-        transaction_type=request.POST.get('transaction_type')
-        date = request.POST.get('date')
-        amount = int(request.POST.get('amount'))
-        mode = request.POST.get('mode')
-        note = request.POST.get('note')
-
-        last_transaction = entry_payment.objects.order_by('-transaction_no').first()
-        if last_transaction:
-            transaction_no = last_transaction.transaction_no + 1
-        else:
-            transaction_no = 1  
-
-        new_transaction = entry_payment(
-            person_type=person_type,
-            name=name,
-            transaction_type=transaction_type,
-            date=date,
-            amount=amount,
-            mode=mode,
-            note=note,
-            transaction_no=transaction_no
-        )
-
-        new_transaction.save()
-        
-
-    else:
-        sellers = seller.objects.all()
-        buyers = buyer.objects.all()
-        employees = employee.objects.all()
-        return render(request, 'add_entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
-
-
-
-@login_required(login_url="/login_page/")
-def manage_entry_stock(request):
-    entry_stock_obj=entry_stock.objects.all()
-    if len(entry_stock_obj)==0:
-        messages.info(request, 'No Entries Found')
-        return render(request, "manage_entry_stock.html")
-    return render(request, "manage_entry_stock", {'stock':entry_stock_obj})
-
-
-@login_required(login_url="/login_page/")
-def delete_entry_stock(request, stock_id):
-    stock_obj= get_object_or_404(entry_stock, id=stock_id)
-    if request.method == 'POST':
-        stock_obj.delete()
-        return redirect('manage_entry_stock')
-    return render(request, 'manage_entry_stock.html', {'stock': entry_stock})
-
-
-@login_required(login_url="/login_page/")
-def add_entry_stock(request):
-    if request.method == "POST":
-        person_type = request.POST.get('person_type') 
-        name_id = request.POST.get('name')
-        name = person_type.objects.get(id=name_id)
-
-        transaction_type=request.POST.get('transaction_type')
-        date = request.POST.get('date')
-        amount = int(request.POST.get('amount'))
-        mode = request.POST.get('mode')
-        note = request.POST.get('note')
-
-        last_transaction = entry_stock.objects.order_by('-transaction_no').first()
-        if last_transaction:
-            transaction_no = last_transaction.transaction_no + 1
-        else:
-            transaction_no = 1  
-
-        new_transaction = entry_stock(
-            person=name,
-            transaction_type=transaction_type,
-            date=date,
-            amount=amount,
-            mode=mode,
-            note=note,
-            transaction_no=transaction_no
-        )
-
-        new_transaction.save()
-        return render(request, 'manage_entry_stock.html')
-        
-
-    else:
-        sellers = seller.objects.all()
-        buyers = buyer.objects.all()
-        employees = employee.objects.all()
-        return render(request, 'add_entry_stock.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
-
-
-@login_required(login_url="/login_page/")
-def entry_stock(request):
-    return render(request, "entry_stock.html")
-
-
-
-
-
-
+# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * A U T H E N T I C A  T I O N ---- E N D    * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
 
 
@@ -345,65 +199,6 @@ def add_seller(request):
     
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * S E L L E R - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
-# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * E M P L O Y E E - - - - S T A R T * * * * * * * * * * * * * * * * * * * * * * * * * *  *
-
-
-@login_required(login_url="/login_page/")
-def manage_employee(request):
-    employees=employee.objects.all()
-    if len(employees)==0:
-        messages.info(request, 'No employee Found')
-        return render(request, "manage_employee.html")
-    return render(request, "manage_employee.html", {'employees':employees})
-
-@login_required(login_url="/login_page/")
-def delete_employee(request, employee_id):
-    employee_obj= get_object_or_404(employee, id=employee_id)
-    if request.method == 'POST':
-        employee_obj.delete()
-        return redirect('manage_employee')
-    return render(request, 'manage_employee.html', {'employee': employee})
-
-
-@login_required(login_url="/login_page/")
-def add_employee(request):
-    if request.method == "POST":
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        add = request.POST.get('add')
-        city = request.POST.get('city')
-        state = request.POST.get('state')
-        email = request.POST.get('email')
-        bal = request.POST.get('bal')
-        aadhaar = request.POST.get('aadhaar')
-        
-        
-        last_employee = employee.objects.all().order_by('empid').last()
-        if last_employee:
-            empid = int(last_employee.empid) + 1  # Ensure empid is an integer before incrementing
-        else:
-            empid = 1  # Start with 1 if no employees exist
-        
-        employee_object = employee(
-            name=name,
-            empid=empid,
-            phone=phone,
-            add=add,
-            city=city,
-            state=state,
-            email=email,
-            bal=bal,
-            aadhaar=aadhaar
-        )
-
-        employee_object.save()
-        return redirect("/manage_employee/")
-    else:
-        return render(request, "add_employee.html")
-    
-# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * E M P L O Y E E - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
-
-
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I T E M   - - - - S T A R T  * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
@@ -449,6 +244,8 @@ def add_item(request):
 
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I T E M   - - - -E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
+
+
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E    - - - -S T A R T    * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 @login_required(login_url="/login_page/")
 def manage_invoice(request):
@@ -583,11 +380,6 @@ def add_invoice(request):
         items = item.objects.all()
         return render(request, 'add_invoice.html', {'sellers': sellers, 'buyers': buyers, 'items': items})
 
-    
-
-# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
-
-
 from num2words import num2words
 
 def amount_to_words(amount):
@@ -595,3 +387,79 @@ def amount_to_words(amount):
     amount_words = amount_words.capitalize()
     amount_words += " only"
     return amount_words
+
+
+@login_required(login_url="/login_page/")
+def view(request):
+    invoices=invoice.objects.all()
+    if len(invoices)==0:
+        messages.info(request, 'No invoice Found')
+        return render(request, "view.html")
+    return render(request, "view.html", {'invoices':invoices})
+    
+
+# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * I N V O I C E - - - - E N D   * * * * * * * * * * * * * * * * * * * * * * * * * *  *
+
+# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * E M P L O Y E E - - - - S T A R T * * * * * * * * * * * * * * * * * * * * * * * * * *  *
+
+
+@login_required(login_url="/login_page/")
+def manage_employee(request):
+    employees=employee.objects.all()
+    if len(employees)==0:
+        messages.info(request, 'No employee Found')
+        return render(request, "manage_employee.html")
+    return render(request, "manage_employee.html", {'employees':employees})
+
+@login_required(login_url="/login_page/")
+def delete_employee(request, employee_id):
+    employee_obj= get_object_or_404(employee, id=employee_id)
+    if request.method == 'POST':
+        employee_obj.delete()
+        return redirect('manage_employee')
+    return render(request, 'manage_employee.html', {'employee': employee})
+
+
+@login_required(login_url="/login_page/")
+def add_employee(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        add = request.POST.get('add')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        email = request.POST.get('email')
+        bal = request.POST.get('bal')
+        aadhaar = request.POST.get('aadhaar')
+        
+        
+        last_employee = employee.objects.all().order_by('empid').last()
+        if last_employee:
+            empid = int(last_employee.empid) + 1  # Ensure empid is an integer before incrementing
+        else:
+            empid = 1  # Start with 1 if no employees exist
+        
+        employee_object = employee(
+            name=name,
+            empid=empid,
+            phone=phone,
+            add=add,
+            city=city,
+            state=state,
+            email=email,
+            bal=bal,
+            aadhaar=aadhaar
+        )
+
+        employee_object.save()
+        return redirect("/manage_employee/")
+    else:
+        return render(request, "add_employee.html")
+    
+# * * * * * * * * * * * * *  * * * * * * * * * * * * * * * E M P L O Y E E - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
+
+
+
+
+
+

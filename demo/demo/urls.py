@@ -3,17 +3,15 @@ from django.urls import path
 from bill import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+
     path('', views.main, name="main"),
-
-
-    path('login_page/', views.login_page, name="login_page"),
-    path('logout_page/', views.logout_page, name="logout_page"),
     path('register/', views.register, name="register"),
     path('registersuccess/', views.registersuccess, name="registersuccess"),
-
-
+    path('login_page/', views.login_page, name="login_page"),
+    path('logout_page/', views.logout_page, name="logout_page"),
     path('home/', views.home, name="home"),
-
+    path('deleteallusers/', views.deleteallusers, name="deleteallusers"),
 
     path('manage_buyer/', views.manage_buyer, name="manage_buyer"),
     path('add_buyer/', views.add_buyer, name="add_buyer"),
@@ -24,15 +22,9 @@ urlpatterns = [
     path('add_seller/', views.add_seller, name="add_seller"),
     path('delete_seller/<int:seller_id>/', views.delete_seller, name="delete_seller"),
 
-    path('manage_employee/', views.manage_employee, name="manage_employee"),
-    path('add_employee/', views.add_employee, name="add_employee"),
-    path('delete_employee/<int:employee_id>/', views.delete_employee, name="delete_employee"),
-
-
     path('manage_item/', views.manage_item, name="manage_item"),
     path('add_item/', views.add_item, name="add_item"),
     path('delete_item/<int:item_id>/', views.delete_item, name="delete_item"),
-
 
     path('manage_invoice/', views.manage_invoice, name="manage_invoice"),
     path('add_invoice/', views.add_invoice, name="add_invoice"),
@@ -41,16 +33,8 @@ urlpatterns = [
     path('view/', views.view, name="view"),
 
 
-    path('entry/', views.entry, name="entry"),
-    path('manage_entry_payment/', views.manage_entry_payment, name="manage_entry_payment"),
-    path('add_entry_payment/', views.add_entry_payment, name="add_entry_payment"),
-    path('delete_entry_payment/', views.delete_entry_payment, name="delete_entry_payment"),
-    
-    path('manage_entry_stock/', views.manage_entry_stock, name="manage_entry_stock"),
-    path('add_entry_stock/', views.add_entry_stock, name="add_entry_stock"),
-    path('delete_entry_stock/', views.delete_entry_stock, name="delete_entry_stock"),
-
-    
-    path('deleteallusers/', views.deleteallusers, name="deleteallusers"),
+    path('manage_employee/', views.manage_employee, name="manage_employee"),
+    path('add_employee/', views.add_employee, name="add_employee"),
+    path('delete_employee/<int:employee_id>/', views.delete_employee, name="delete_employee"),
 
 ]

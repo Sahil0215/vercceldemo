@@ -40,21 +40,6 @@ class seller(models.Model):
     def __str__(self):
         return self.name
 
-class employee(models.Model):
-    name = models.CharField(max_length=50)
-    empid = models.CharField(max_length=20, default=0)
-    phone = models.CharField(max_length=15)
-    add = models.CharField(max_length=100, blank=True, null=True)
-    city = models.CharField(max_length=30, blank=True, null=True)
-    state = models.CharField(max_length=20, blank=True, null=True)
-    email = models.CharField(max_length=50, blank=True, null=True)
-    bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    aadhaar = models.CharField(max_length=15)
-
-    def __str__(self):
-        return self.name
-
-
 class item(models.Model):
     name = models.CharField(max_length=20)
     hsn = models.CharField(max_length=7)
@@ -95,25 +80,19 @@ class invoice(models.Model):
 
     def __str__(self):
         return self.invoice_no+"==>From-"+self.invoice_from.name+"==To-"+self.invoice_to.name
-
-
-class entry_payment(models.Model):
-    person_type=models.CharField(max_length=15)
-    transaction_no=models.IntegerField(default=0)
-    name=models.ForeignKey(person_type, on_delete=models.CASCADE, blank=True, null=True)
-    transaction_type=models.CharField(max_length=15)
-    date=models.DateField(blank=True, null=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    mode = models.CharField(max_length=15)
-    note = models.CharField(max_length=200)
-
-class entry_stock(models.Model):
-    transaction_no=models.IntegerField(default=0)
-    name=models.ForeignKey(seller, on_delete=models.CASCADE, blank=True, null=True)
-    transaction_type=models.CharField(max_length=15)
-    date=models.DateField(blank=True, null=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    mode = models.CharField(max_length=15)
-    note = models.CharField(max_length=200)
-
     
+class employee(models.Model):
+    name = models.CharField(max_length=50)
+    empid = models.CharField(max_length=20, default=0)
+    phone = models.CharField(max_length=15)
+    add = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=30, blank=True, null=True)
+    state = models.CharField(max_length=20, blank=True, null=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
+    bal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    aadhaar = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.name
+
+
