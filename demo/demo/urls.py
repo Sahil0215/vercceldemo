@@ -16,6 +16,8 @@ urlpatterns = [
     path('manage_buyer/', views.manage_buyer, name="manage_buyer"),
     path('add_buyer/', views.add_buyer, name="add_buyer"),
     path('delete_buyer/<int:buyer_id>/', views.delete_buyer, name="delete_buyer"),
+    path('buyer_payment/', views.buyer_payment, name="buyer_payment"),
+    path('delete_buyer_payment/', views.delete_buyer_payment, name="delete_buyer_payment"),
 
 
     path('manage_seller/', views.manage_seller, name="manage_seller"),

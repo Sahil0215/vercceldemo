@@ -95,4 +95,14 @@ class employee(models.Model):
     def __str__(self):
         return self.name
 
+class buyer_payment(models.Model):
+    transaction_no=models.PositiveIntegerField(default=0)
+    date=models.DateField(blank=True, null=True)
+    name=models.ForeignKey(buyer, on_delete=models.CASCADE, blank=True, null=True)
+    type = models.CharField(max_length=10)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) 
+    mode = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.transaction_no
 
