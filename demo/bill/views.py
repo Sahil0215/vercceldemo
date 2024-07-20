@@ -103,20 +103,56 @@ def entry(request):
     return render(request, "entry.html")
 
 
+@login_required(login_url="/login_page/")
+def manage_entry_payment(request):
+    entry_payment_obj=entry_payment.objects.all()
+    if len(entry_payment_obj)==0:
+        messages.info(request, 'No Entries Found')
+        return render(request, "manage_entry_payment.html")
+    return render(request, "manage_entry_payment", {'payment':entry_payment_obj})
 
 
 @login_required(login_url="/login_page/")
-def entry_payment(request):
+def delete_entry_payment(request, payment_id):
+    payment_obj= get_object_or_404(entry_payment, id=payment_id)
+    if request.method == 'POST':
+        payment_obj.delete()
+        return redirect('manage_entry_payment')
+    return render(request, 'manage_entry_payment.html', {'payment': entry_payment})
+
+
+@login_required(login_url="/login_page/")
+def add_entry_payment(request):
     if request.method == "POST":
-        money_from_id = request.POST.get('money_from')
-        money_to_id = request.POST.get('money_to')
-        amount = request.POST.get('amount')
+        person_type = request.POST.get('person_type') 
+        name_id = request.POST.get('name')
+        name = person_type.objects.get(id=name_id)
+
+        transaction_type=request.POST.get('transaction_type')
         date = request.POST.get('date')
+        amount = int(request.POST.get('amount'))
         mode = request.POST.get('mode')
         note = request.POST.get('note')
 
-        money_from = seller.objects.get(id=money_from_id)
-        money_to = seller.objects.get(id=money_to_id)
+        last_transaction = entry_payment.objects.order_by('-transaction_no').first()
+        if last_transaction:
+            transaction_no = last_transaction.transaction_no + 1
+        else:
+            transaction_no = 1  
+
+        new_transaction = entry_payment(
+            person=name,
+            transaction_type=transaction_type,
+            date=date,
+            amount=amount,
+            mode=mode,
+            note=note,
+            transaction_no=transaction_no
+        )
+
+        new_transaction.save()
+        
+
     else:
         sellers = seller.objects.all()
         buyers = buyer.objects.all()

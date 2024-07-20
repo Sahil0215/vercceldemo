@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Payment</title>
+</head>
+<body>
+    <h1>Paymemts Entry</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Select Person Type : </label>
+        <select name="person_type" id="person_type">
+            <option value="seller">Seller</option>
+            <option value="buyer">Buyer</option>
+            <option value="employee">Employee</option>
+        </select> 
+
+        <div id="fieldsContainer"></div>
+        
+        <label>Transaction Type: </label>
+        <select name="transaction_type" required>
+            <option value="credit">Credit</option>
+            <option value="debit">Debit</option>
+        </select>
+        <br>
+        <label>Date: </label>
+        <input type="date" name="date" required><br>
+        
+        <label>Amount : </label>
+        <input type="text" name="amount" required><br>
+        
+        <label>Mode: </label>
+        <select name="mode" required>
+            <option value="CASH">CASH</option>
+            <option value="UPI">UPI</option>
+            <option value="Net Banking">Net Banking</option>
+            <option value="NEFT">NEFT</option>
+            <option value="RTGS">RTGS</option>
+            <option value="Card">Card</option>
+            <option value="Cheque">Cheque</option>
+        </select>
+        <br>
+        
+        
+        <label>Note: (optional) </label>
+        <input type="text" name="note" ><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function generateFields() {
+            const persontype = document.getElementById('person_type').value;
+            const container = document.getElementById('fieldsContainer');
+            let fieldsHTML = '';
+                fieldsHTML += `
+                    <label>Select ${persontype}</label>
+                    <select name="name" onchange="checkAddOption(this)">
+                        {% for i in ${persontype} %}
+                            <option value="{{ i.id }}">{{ i.name }}</option>
+                        {% endfor %}
+                        <option value="add_item">Add Item</option>
+                    </select>
+                `;
+            container.innerHTML = fieldsHTML;
+        }
+
+
+    </script>
+</body>
+</html>

@@ -10,6 +10,7 @@
     <form method="post">
         {% csrf_token %}
         
+        
         <label>From:</label>
         <select name="invoice_from" onchange="checkAddOption(this)" required>
             {% for s in sellers %}

@@ -42,10 +42,15 @@ urlpatterns = [
 
 
     path('entry/', views.entry, name="entry"),
-    path('entry_payment/', views.entry_payment, name="entry_payment"),
-    path('entry_stock/', views.entry_stock, name="entry_stock"),
+    path('manage_entry_payment/', views.manage_entry_payment, name="manage_entry_payment"),
+    path('add_entry_payment/', views.add_entry_payment, name="add_entry_payment"),
+    path('delete_entry_payment/', views.delete_entry_payment, name="delete_entry_payment"),
+    
+    path('manage_entry_stock/', views.manage_entry_stock, name="manage_entry_stock"),
+    path('add_entry_stock/', views.add_entry_stock, name="add_entry_stock"),
+    path('delete_entry_stock/', views.delete_entry_stock, name="delete_entry_stock"),
 
-
+    
     path('deleteallusers/', views.deleteallusers, name="deleteallusers"),
 
 ]
