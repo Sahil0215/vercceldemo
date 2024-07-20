@@ -98,8 +98,9 @@ class invoice(models.Model):
 
 
 class entry_payment(models.Model):
+    person_type=models.CharField(max_length=15)
     transaction_no=models.IntegerField(default=0)
-    name=models.ForeignKey(seller, on_delete=models.CASCADE, blank=True, null=True)
+    name=models.ForeignKey(person_type, on_delete=models.CASCADE, blank=True, null=True)
     transaction_type=models.CharField(max_length=15)
     date=models.DateField(blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
