@@ -160,7 +160,7 @@ def add_entry_payment(request):
         sellers = seller.objects.all()
         buyers = buyer.objects.all()
         employees = employee.objects.all()
-        return render(request, 'manage_entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
+        return render(request, 'add_entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
 
 
 
@@ -212,13 +212,14 @@ def add_entry_stock(request):
         )
 
         new_transaction.save()
+        return render(request, 'manage_entry_stock.html')
         
 
     else:
         sellers = seller.objects.all()
         buyers = buyer.objects.all()
         employees = employee.objects.all()
-        return render(request, 'manage_entry_stock.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
+        return render(request, 'add_entry_stock.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
 
 
 @login_required(login_url="/login_page/")
