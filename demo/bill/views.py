@@ -129,7 +129,15 @@ def add_entry_payment(request):
     if request.method == "POST":
         person_type = request.POST.get('person_type') 
         name_id = request.POST.get('name')
-        name = person_type.objects.get(id=name_id)
+
+        if person_type=="seller":
+            name = seller.objects.get(id=name_id)
+        elif person_type=="buyer":
+            name = buyer.objects.get(id=name_id)
+        elif person_type=="employee":
+            name = employee.objects.get(id=name_id)
+
+
 
         transaction_type=request.POST.get('transaction_type')
         date = request.POST.get('date')
