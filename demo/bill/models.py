@@ -106,4 +106,13 @@ class entry_payment(models.Model):
     mode = models.CharField(max_length=15)
     note = models.CharField(max_length=200)
 
+class entry_stock(models.Model):
+    transaction_no=models.IntegerField(default=0)
+    name=models.ForeignKey(seller, on_delete=models.CASCADE, blank=True, null=True)
+    transaction_type=models.CharField(max_length=15)
+    date=models.DateField(blank=True, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    mode = models.CharField(max_length=15)
+    note = models.CharField(max_length=200)
+
     

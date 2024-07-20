@@ -98,6 +98,9 @@ def view(request):
         return render(request, "view.html")
     return render(request, "view.html", {'invoices':invoices})
 
+
+
+
 @login_required(login_url="/login_page/")
 def entry(request):
     return render(request, "entry.html")
@@ -157,7 +160,65 @@ def add_entry_payment(request):
         sellers = seller.objects.all()
         buyers = buyer.objects.all()
         employees = employee.objects.all()
-        return render(request, 'entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
+        return render(request, 'manage_entry_payment.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
+
+
+
+@login_required(login_url="/login_page/")
+def manage_entry_stock(request):
+    entry_stock_obj=entry_stock.objects.all()
+    if len(entry_stock_obj)==0:
+        messages.info(request, 'No Entries Found')
+        return render(request, "manage_entry_stock.html")
+    return render(request, "manage_entry_stock", {'stock':entry_stock_obj})
+
+
+@login_required(login_url="/login_page/")
+def delete_entry_stock(request, stock_id):
+    stock_obj= get_object_or_404(entry_stock, id=stock_id)
+    if request.method == 'POST':
+        stock_obj.delete()
+        return redirect('manage_entry_stock')
+    return render(request, 'manage_entry_stock.html', {'stock': entry_stock})
+
+
+@login_required(login_url="/login_page/")
+def add_entry_stock(request):
+    if request.method == "POST":
+        person_type = request.POST.get('person_type') 
+        name_id = request.POST.get('name')
+        name = person_type.objects.get(id=name_id)
+
+        transaction_type=request.POST.get('transaction_type')
+        date = request.POST.get('date')
+        amount = int(request.POST.get('amount'))
+        mode = request.POST.get('mode')
+        note = request.POST.get('note')
+
+        last_transaction = entry_stock.objects.order_by('-transaction_no').first()
+        if last_transaction:
+            transaction_no = last_transaction.transaction_no + 1
+        else:
+            transaction_no = 1  
+
+        new_transaction = entry_stock(
+            person=name,
+            transaction_type=transaction_type,
+            date=date,
+            amount=amount,
+            mode=mode,
+            note=note,
+            transaction_no=transaction_no
+        )
+
+        new_transaction.save()
+        
+
+    else:
+        sellers = seller.objects.all()
+        buyers = buyer.objects.all()
+        employees = employee.objects.all()
+        return render(request, 'manage_entry_stock.html', {'sellers': sellers, 'buyers': buyers, 'employees': employees})
 
 
 @login_required(login_url="/login_page/")
