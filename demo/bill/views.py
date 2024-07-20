@@ -152,7 +152,7 @@ def add_entry_payment(request):
             transaction_no = 1  
 
         new_transaction = entry_payment(
-            person=name,
+            name=name,
             transaction_type=transaction_type,
             date=date,
             amount=amount,
