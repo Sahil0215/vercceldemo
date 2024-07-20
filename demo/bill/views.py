@@ -143,7 +143,7 @@ def add_buyer(request):
     return render(request, 'add_buyer.html')
 
 @login_required(login_url="/login_page/")
-def buyer_payment(request):
+def manage_buyer_payment(request):
     b_payment=buyer_payment.objects.all()
     if len(b_payment)==0:
         messages.info(request, 'No Record Found')
@@ -155,8 +155,8 @@ def delete_buyer_payment(request, b_payment_id):
     bp_obj= get_object_or_404(seller, id=b_payment_id)
     if request.method == 'POST':
         bp_obj.delete()
-        return redirect('buyer_payment')
-    return redirect('buyer_payment')
+        return redirect('manage_buyer_payment')
+    return redirect('manage_buyer_payment')
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * B U Y E R - - - - E N D  * * * * * * * * * * * * * * * * * * * * * * * * * *  *
 
 # * * * * * * * * * * * * *  * * * * * * * * * * * * * * * S E L L E R - - - - S T A R T * * * * * * * * * * * * * * * * * * * * * * * * * *  *
