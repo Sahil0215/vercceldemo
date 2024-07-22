@@ -129,6 +129,13 @@
         <div class="title"><span>INSTABILL</span></div>
         <form action="post">
           {% csrf_token %}
+          {% if messages %}
+          <div style="color: red;">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+          </div>
+          {% endif %}
           <div class="row">
             <i class="fas fa-user"></i>
             <input type="text" placeholder="Email or Phone" required>
