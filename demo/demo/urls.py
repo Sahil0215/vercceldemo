@@ -5,10 +5,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
 
-    path('', views.main, name="main"),
+    # path('', views.main, name="main"),
+    path('', views.login_page, name="login_page"),
     path('register/', views.register, name="register"),
     path('registersuccess/', views.registersuccess, name="registersuccess"),
-    path('login_page/', views.login_page, name="login_page"),
     path('logout_page/', views.logout_page, name="logout_page"),
     path('home/', views.home, name="home"),
     path('deleteallusers/', views.deleteallusers, name="deleteallusers"),
