@@ -1,28 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins',sans-serif;
 }
+
 body{
   background: #1abc9c;
   overflow: hidden;
+  margin: 0;
 }
+
 ::selection{
   background: rgba(26,188,156,0.3);
 }
+
 .container{
   max-width: 440px;
   padding: 0 20px;
   margin: 170px auto;
 }
+
 .wrapper{
   width: 100%;
   background: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.1);
 }
+
 .wrapper .title{
   height: 90px;
   background: #16a085;
@@ -34,14 +41,17 @@ body{
   align-items: center;
   justify-content: center;
 }
+
 .wrapper form{
   padding: 30px 25px 25px 25px;
 }
+
 .wrapper form .row{
   height: 45px;
   margin-bottom: 15px;
   position: relative;
 }
+
 .wrapper form .row input{
   height: 100%;
   width: 100%;
@@ -52,13 +62,16 @@ body{
   font-size: 16px;
   transition: all 0.3s ease;
 }
+
 form .row input:focus{
   border-color: #16a085;
   box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
 }
+
 form .row input::placeholder{
   color: #999;
 }
+
 .wrapper form .row i{
   position: absolute;
   width: 47px;
@@ -72,17 +85,21 @@ form .row input::placeholder{
   align-items: center;
   justify-content: center;
 }
+
 .wrapper form .pass{
   margin: -8px 0 20px 0;
 }
+
 .wrapper form .pass a{
   color: #16a085;
   font-size: 17px;
   text-decoration: none;
 }
+
 .wrapper form .pass a:hover{
   text-decoration: underline;
 }
+
 .wrapper form .button input{
   color: #fff;
   font-size: 20px;
@@ -92,19 +109,85 @@ form .row input::placeholder{
   border: 1px solid #16a085;
   cursor: pointer;
 }
+
 form .button input:hover{
   background: #12876f;
 }
+
 .wrapper form .signup-link{
   text-align: center;
   margin-top: 20px;
   font-size: 17px;
 }
+
 .wrapper form .signup-link a{
   color: #16a085;
   text-decoration: none;
 }
+
 form .signup-link a:hover{
   text-decoration: underline;
 }
-demo\bill\static\css\login_style.css
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 100px auto;
+    padding: 0 10px;
+  }
+  .wrapper .title {
+    font-size: 24px;
+  }
+  .wrapper form {
+    padding: 20px 15px 15px 15px;
+  }
+  .wrapper form .row {
+    height: 40px;
+    margin-bottom: 10px;
+  }
+  .wrapper form .row input {
+    font-size: 14px;
+    padding-left: 50px;
+  }
+  .wrapper form .row i {
+    width: 40px;
+    font-size: 16px;
+  }
+  .wrapper form .button input {
+    font-size: 18px;
+  }
+  .wrapper form .signup-link {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 50px auto;
+  }
+  .wrapper .title {
+    font-size: 20px;
+    height: 70px;
+  }
+  .wrapper form {
+    padding: 15px 10px 10px 10px;
+  }
+  .wrapper form .row {
+    height: 35px;
+    margin-bottom: 8px;
+  }
+  .wrapper form .row input {
+    font-size: 12px;
+    padding-left: 45px;
+  }
+  .wrapper form .row i {
+    width: 35px;
+    font-size: 14px;
+  }
+  .wrapper form .button input {
+    font-size: 16px;
+  }
+  .wrapper form .signup-link {
+    font-size: 13px;
+  }
+}
