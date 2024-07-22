@@ -100,7 +100,7 @@ form .row input::placeholder {
   text-decoration: underline;
 }
 
-.wrapper form .button input {
+.wrapper form .button button {
   color: #fff;
   font-size: 20px;
   font-weight: 500;
