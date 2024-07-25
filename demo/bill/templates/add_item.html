@@ -1,31 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
-    <title>Create ITEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instabill - Add New Item</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="{% static 'css/add.css' %}">
 </head>
 <body>
-    
-    <h1>Create ITEM</h1>
-    <form method="POST" action="{% url 'add_item' %}">
-        {% csrf_token %}
-        <label for="hsn">HSN:</label>
-        <input type="text" id="hsn" name="hsn" required> <br><br>
-        
-        <label for="name">Item Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
+    <div class="navbar">
+        <a href="{% url 'home' %}"><div class="logo">Instabill</div></a>
+        <a href="{% url 'logout_page' %}"><button class="logout-btn">Logout</button></a>
+    </div>
 
-        <label for="sgst">Enter SGST/IGST (%): </label>
-        <input type="text"  name="sgst" required><br><br>
-        
-        <label for="cgst">Enter CGST (%):</label>
-        <input type="text"  name="cgst" required><br><br>
-               
-        <label for="stock">Current Stock:</label>
-        <input type="number" name="stock" required><br><br>
-        
-        
-        <button type="submit">Add Item</button>
-    </form>    
+    <div class="container">
+        <h2>Add New Item</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="hsn">HSN:</label>
+                <input type="text" id="hsn" name="hsn" required> <br><br>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Item Name:</label>
+                <input type="text" id="name" name="name" required><br><br>
+            </div>
+    
+            <div class="form-group">
+                <label for="sgst">Enter SGST/IGST (%): </label>
+                <input type="text"  name="sgst" required><br><br>
+            </div>
+            
+            <div class="form-group">
+                <label for="cgst">Enter CGST (%):</label>
+                <input type="text"  name="cgst" required><br><br>
+            </div>
+                   
+            <div class="form-group">
+                <label for="stock">Current Stock:</label>
+                <input type="number" name="stock" required><br><br>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
