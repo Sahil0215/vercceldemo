@@ -77,7 +77,7 @@ def logout_page(request):
     return redirect('/')
 
 def demo(request):
-    return render("demo/")
+    return render(request,"demo.html")
 
 @login_required(login_url="/login_page/")
 def home(request):
