@@ -76,6 +76,9 @@ def logout_page(request):
     logout(request)
     return redirect('/')
 
+def demo(request):
+    return render("demo/")
+
 @login_required(login_url="/login_page/")
 def home(request):
     seller_count=len(seller.objects.all())
