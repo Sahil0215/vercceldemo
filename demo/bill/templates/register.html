@@ -16,12 +16,24 @@
         {% endfor %}
     </div>
     {% endif %}
+
+    <label for="">Username: </label>
     <input type="text" placeholder="Enter Username" name="username" required><br>
+    
+    <label for="">Phone No.: </label>
     <input type="text" placeholder="Enter Phone No." name="phone" required><br>
+    
+    <label for="">Email : </label>
     <input type="email" placeholder="Enter Email Id" name="email" required><br>
+    
+    <label for="">Password : </label>
     <input type="password" placeholder="Enter Password" name="password" required><br>
+    
+    <label for="">Confirm Password : </label>
     <input type="password" placeholder="Confirm Password" name="cpass" required><br>
+    
     <button type="submit">Submit</button><br>
+    
     Already have an account?<a href="{% url 'login_page' %}">Login</a>
 
  </form>

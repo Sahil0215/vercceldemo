@@ -17,9 +17,15 @@
     </div>
     {% endif %}
     
+    <label for="username">Username: </label>
     <input type="text" placeholder="Enter Username" name="username" required><br>
+    
+    
+    <label for="password">Password: </label>
     <input type="password" placeholder="Enter Password" name="password" required><br>
+
     <button type="submit">Submit</button><br>
+    
     Don't have an account? <a href="{% url 'register' %}">Register</a>
 
  </form>
