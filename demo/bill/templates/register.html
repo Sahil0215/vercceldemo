@@ -1,53 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    {% load static %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Register | InstaBill</title> 
-    <link rel="stylesheet" href="{% static 'css/login_style.css'%}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-  </head>
-  <body>
-    <div class="container">
-      <div class="wrapper">
-        <div class="title"><span>INSTABILL</span></div>
-        <form action="post">
-          {% csrf_token %}
-          {% if messages %}
-          <div style="color: red;">
-            {% for message in messages %}
-            {{ message }}
-            {% endfor %}
-          </div>
-          {% endif %}
-          <div class="row">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Enter Username"  name="username" required>
-          </div>
-          <div class="row">
-            <i class="fas fa-phone"></i>
-            <input type="text" placeholder="Enter Mobile No."  name="phone" required>
-          </div>
-          <div class="row">
-            <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Enter Email" name="email" required>
-          </div>
-          <div class="row">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Enter Password" name="password" required>
-          </div>
-          <div class="row">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Confirm Password" name="cpass" required>
-          </div>
-          <!-- <div class="pass"><a href="#">Forgot password?</a></div> -->
-          <div class="row button">
-            <button type="submit" value="Sign Up">SignUp</button>
-          </div>
-          <div class="signup-link">Already a member? <a href="{% url 'login_page' %}">Login</a></div>
-        </form>
-      </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignUp | InstaBill</title>
+</head>
+<body>
+  <h1>Register</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% if messages %}
+    <div style="color: red;">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
     </div>
-  </body>
+    {% endif %}
+    phone
+    email
+    username
+    password
+    cpass
+    <input type="text" placeholder="Enter Username" name="username" required><br>
+    <input type="text" placeholder="Enter Phone No." name="phone" required><br>
+    <input type="email" placeholder="Enter Email Id" name="email" required><br>
+    <input type="password" placeholder="Enter Password" name="password" required><br>
+    <input type="password" placeholder="Confirm Password" name="cpass" required><br>
+    <button type="submit">Submit</button>
+ </form>
+  
+</body>
 </html>

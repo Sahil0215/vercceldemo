@@ -1,39 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    {% load static %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>INSTABILL  | LOGIN</title> 
-    <link rel="stylesheet" href="{% static 'css/login_style.css'%}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-  </head>
-  <body>
-    <div class="container">
-      <div class="wrapper">
-        <div class="title"><span>INSTABILL</span></div>
-        <form action="post">
-          {% csrf_token %}
-          {% if messages %}
-          <div style="color: red;">
-            {% for message in messages %}
-            {{ message }}
-            {% endfor %}
-          </div>
-          {% endif %}
-          <div class="row">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Enter Username"  name="username" required>
-          </div>
-          <div class="row">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Enter Password" name="password" required>
-          </div>
-          <button type="submit">login</button>
-          <div class="signup-link">Not a member? <a href="{% url 'register' %}">Signup now</a></div>
-        </form>
-      </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | InstaBill</title>
+</head>
+<body>
+  <h1>LOGIN </h1>
+  <form method="post">
+    {% csrf_token %}
+    {% if messages %}
+    <div style="color: red;">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
     </div>
-
-  </body>
+    {% endif %}
+    
+    <input type="text" placeholder="Enter Username" name="username" required><br>
+    <input type="password" placeholder="Enter Password" name="password" required><br>
+    <button type="submit">Submit</button>
+ </form>
+  
+</body>
 </html>
