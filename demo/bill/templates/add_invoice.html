@@ -20,7 +20,7 @@
         <form method="post">
             {% csrf_token %}
             
-            <div class="form-group">
+            <div class="form-select">
                 <label>From:</label>
                 <select name="invoice_from" onchange="checkAddOption(this)" required>
                     {% for s in sellers %}
@@ -31,7 +31,7 @@
             </div>
     
             
-            <div class="form-group">
+            <div class="form-select">
                 <label>To:</label>
                 <select name="invoice_to" onchange="checkAddOption(this)" required>
                     {% for b in buyers %}
