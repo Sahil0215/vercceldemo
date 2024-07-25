@@ -8,6 +8,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
      <link rel="stylesheet" href="{% static 'css/add.css' %}">
+     <style>
+        .button-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+        .button-container button {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+        @media (min-width: 600px) {
+            .button-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+     </style>
 </head>
 <body>
     <div class="navbar">
@@ -15,45 +43,16 @@
         <a href="{% url 'logout_page' %}"><button class="logout-btn">Logout</button></a>
     </div>
 
-    <div class="container">
-        <h2>Create Buyer</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="gst">GSTIN:</label>
-                <input type="text" id="gst" name="gst" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone No.:</label>
-                <input type="text" id="phone" name="phone" required>
-            </div>
-            <div class="form-group">
-                <label for="add">Address</label>
-                <input type="text" id="add" name="add" required>
-            </div>
-            <div class="form-group">
-                <label for="city">City: </label>
-                <input type="text" id="city" name="city" required>
-            </div>
-            <div class="form-group">
-                <label for="state">State: </label>
-                <input type="text" id="state" name="state" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-mail: </label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="bal">Opening Balance: </label>
-                <input type="number" id="bal" name="bal" required>
-            </div>
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
+    <h1>Welcome</h1>
+    <div class="button-container">
+        <button>Button 1</button>
+        <button>Button 2</button>
+        <button>Button 3</button>
+        <button>Button 4</button>
+        <button>Button 5</button>
+        <button>Button 6</button>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
