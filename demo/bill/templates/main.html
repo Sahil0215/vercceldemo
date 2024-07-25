@@ -1,196 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <title>HOME | InstaBill</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5;
+            font-family: 'Poppins', sans-serif;
+        }
+        .home-container {
+            text-align: center;
+            background: #fff;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .home-container h1 {
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        .home-container .btn {
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+    </style>
 </head>
-
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="100">
-
-  <div class="site-mobile-menu site-navbar-target">
-    <div class="site-mobile-menu-header">
-      <div class="site-mobile-menu-close">
-        <span class="icofont-close js-menu-toggle"></span>
-      </div>
+<body>
+    <div class="home-container">
+        <h1>Welcome</h1>
+        <a href="{% url 'login_page' %}" class="btn btn-primary btn-block">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary btn-block">Register</a>
     </div>
-    <div class="site-mobile-menu-body">
-    </div>
-  </div>
 
-
-  
-  <nav class="site-nav dark js-site-navbar mb-5 site-navbar-target">
-    <div class="container">
-      <div class="site-navigation">
-        <a href="{% url 'main' %}" class="logo m-0 float-left">InstaBill<span class="text-primary">.</span></a>
-
-        <ul class="js-clone-nav d-none mt-1 d-lg-inline-block site-menu float-right">
-          <li class="cta-button-outline"><a href="{% url 'login_page' %}">Sign in</a></li>
-          <li class="cta-primary"><a href="{% url 'register' %}">Register</a></li>
-        </ul>
-
-
-        <a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block dark d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-          <span></span>
-        </a>
-
-      </div>
-    </div>
-  </nav>
-  
-
-  <div class="untree_co-hero pb-0" id="home-section">
-    <div class="container">
-      <div class="row">
-
-        <div class="col-12">
-          <div class="dots"></div>
-          <div class="row justify-content-center">
-            <div class="col-md-7 text-center mb-5">
-              <h1 class="heading" data-aos="fade-up" data-aos-delay="0">Effortless Management of your BUSINESS <span class="d-block"> by using <a href="{% url 'main' %}">InstaBill</a></span></h1>
-            </div>
-          </div>
-          <div class="row align-items-center">
-
-            <div class="col-lg-4">
-              <div class="intro">
-
-                <div class="excerpt"data-aos="fade-up" data-aos-delay="100">
-                  <span class="caption">Welcome to InstaBill</span>
-                  <h2 class="font-weight-bold">Explore The Platform</h2>
-                  <p>Say goodbye to paperwork and experience seamless business management from anywhere, on any device. With our intuitive app, managing your business has never been easier or more efficient.</p>  
-                </div>
-                <p data-aos="fade-up"  data-aos-delay="200">
-                  <a href="{% url 'register' %}" class="btn btn-primary smoothscroll mr-1">Become  Member</a>
-                  <a href="{% url 'login_page' %}" class="btn btn-outline-primary smoothscroll">Already a Member</a>
-                </p>
-              </div>
-              
-            </div>
-            <div class="col-lg-8">
-              <div class="illustration">
-                <img src="{% static 'images/graphs-statistics_outline.svg' %}" alt="Image" class="img-fluid">
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- FEATURES -->
-  <div class="untree_co-section">
-    <div class="container">
-
-      <div class="row mb-5">
-        <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-          <span class="caption">Features</span>
-          <h2 class="heading">Advantage of using our Service</h2>
-        </div>
-      </div>
-
-      <div class="row">
-        
-        
-        <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="service horizontal d-flex">
-            <div class="service-icon color-1 mb-4">
-              <svg class="bi bi-app-indicator" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z"/>
-                <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-              </svg>
-            </div>
-            <div class="service-contents">
-              <h3>1. Invoice Generator</h3>
-              <p>Create customizable invoice templates with auto-calculation of totals, taxes, and discounts.</p>  
-              
-            </div> <!-- /.service-contents-->
-          </div> <!-- /.service -->
-        </div>
-        
-        
-        <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-          <div class="service horizontal d-flex">
-            <div class="service-icon color-2 mb-4">
-              <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"/>
-                <path fill-rule="evenodd" d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"/>
-              </svg>
-            </div> <!-- /.icon -->
-            <div class="service-contents">
-              <h3>2. Stock Management</h3>
-              <p>Efficient items stock management is crucial for maintaining optimal inventory levels and minimizing stockouts.</p>
-            </div> <!-- /.service-contents-->
-          </div> <!-- /.service -->
-        </div>
-        
-        
-        <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-          <div class="service horizontal d-flex">
-            <div class="service-icon color-3 mb-4">
-              <svg class="bi bi-briefcase" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6h-1v6a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-6H0v6z"/>
-                <path fill-rule="evenodd" d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5v2.384l-7.614 2.03a1.5 1.5 0 0 1-.772 0L0 6.884V4.5zM1.5 4a.5.5 0 0 0-.5.5v1.616l6.871 1.832a.5.5 0 0 0 .258 0L15 6.116V4.5a.5.5 0 0 0-.5-.5h-13zM5 2.5A1.5 1.5 0 0 1 6.5 1h3A1.5 1.5 0 0 1 11 2.5V3h-1v-.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5V3H5v-.5z"/>
-              </svg>
-            </div> <!-- /.icon -->
-            <div class="service-contents">
-              <h3>3. Finance and Capital Management</h3>
-              <p>Streamline your operations and maximize profitability with robust financial management solutions tailored to optimize budgeting, cash flow, investments, and many more.</p>  
-              
-            </div> 
-          </div>
-        </div>
-        
-        </div>
-      </div> 
-
-    </div>
-  </div>
-  
-  <div class="container">
-    <div class="card">Card 1</div>
-    <div class="card">Card 2</div>
-    <div class="card">Card 3</div>
-  </div>
-
-      <div class="row mt-5">
-        <div class="col-12 text-center">
-          <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="{% url 'main' %}">Untree.co</a> 
-          </p>
-        </div>
-      </div>
-    </div> 
-  </div>
-
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
-
-  <script src="{%static 'js/jquery-3.4.1.min.js'%}"></script>
-  <script src="{%static 'js/jquery-migrate-3.0.1.min.js'%}"></script>
-  <script src="{%static 'js/popper.min.js'%}"></script>
-  <script src="{%static 'js/bootstrap.min.js'%}"></script>
-  <script src="{%static 'js/owl.carousel.min.js'%}"></script>
-  <script src="{%static 'js/jquery.easing.1.3.js'%}"></script>
-  <script src="{%static 'js/jquery.animateNumber.min.js'%}"></script>
-  <script src="{%static 'js/jquery.waypoints.min.js'%}"></script>
-  <script src="{%static 'js/jquery.fancybox.min.js'%}"></script>
-  <script src="{%static 'js/aos.js'%}"></script>
-  
-  <script src="{% static 'js/custom.js'%}"></script>
-  
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
