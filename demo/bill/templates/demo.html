@@ -20,30 +20,39 @@
 
     <div class="container">
         <h2>Create Buyer</h2>
-        <form action="/submit" method="POST">
+        <form method="POST">
+            {% csrf_token %}
             <div class="form-group">
-                <label for="input1">Input 1</label>
-                <input type="text" id="input1" name="input1" required>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="input2">Input 2</label>
-                <input type="text" id="input2" name="input2" required>
+                <label for="gst">GSTIN:</label>
+                <input type="text" id="gst" name="gst" required>
             </div>
             <div class="form-group">
-                <label for="input3">Input 3</label>
-                <input type="text" id="input3" name="input3" required>
+                <label for="phone">Phone No.:</label>
+                <input type="text" id="phone" name="phone" required>
             </div>
             <div class="form-group">
-                <label for="input4">Input 4</label>
-                <input type="text" id="input4" name="input4" required>
+                <label for="add">Address</label>
+                <input type="text" id="add" name="add" required>
             </div>
             <div class="form-group">
-                <label for="input5">Input 5</label>
-                <input type="text" id="input5" name="input5" required>
+                <label for="city">City: </label>
+                <input type="text" id="city" name="city" required>
             </div>
             <div class="form-group">
-                <label for="input6">Input 6</label>
-                <input type="text" id="input6" name="input6" required>
+                <label for="state">State: </label>
+                <input type="text" id="state" name="state" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail: </label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="bal">Opening Balance: </label>
+                <input type="number" id="bal" name="bal" required>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
