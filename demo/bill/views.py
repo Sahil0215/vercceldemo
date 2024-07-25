@@ -44,7 +44,7 @@ def register(request):
         user_copy=users_copy.objects.create(name=username, phone=phone, email=email, username=username )
         user_copy.save()
         messages.error(request, 'Account Created Successfully')
-        return redirect('/')
+        return redirect('/login_page/')
     return render(request, 'register.html')
 
 
