@@ -67,7 +67,7 @@
             </div>
     
             
-            <div id="fieldsContainer form-group"  style="background-color: #ffffff71;
+            <div id="fieldsContainer"  style="background-color: #ffffff71;
                 border-radius: 4px;
                 margin: 5px;
                 padding: 5px"></div>
@@ -101,6 +101,7 @@
                 let fieldsHTML = '';
                 for (let i = 1; i <= numberOfFields; i++) {
                     fieldsHTML += `
+                        <div class="form-group">
                         <label>Item ${i}</label>
                         <select name="item${i}" onchange="checkAddOption(this)">
                             {% for item in items %}
@@ -108,15 +109,22 @@
                             {% endfor %}
                             <option value="add_item">Add Item</option>
                         </select>
+                        </div>
                         
+                        <div class="form-group">
                         <label>Rate: </label>
                         <input type="text" name="rate${i}">
-                        
+                        </div>
+
+                        <div class="form-group">
                         <label>Quantity:</label>
-                        <input type="number" name="quantity${i}"><br>
-                        
+                        <input type="number" name="quantity${i}">
+                        </div>
+
+                        <div class="form-group">
                         <label>Unit:</label>
-                        <input type="text" name="unit${i}"><br>
+                        <input type="text" name="unit${i}">
+                        </div>
                     `;
                 }
                 container.innerHTML = fieldsHTML;
