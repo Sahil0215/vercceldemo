@@ -1,21 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professional Webpage</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-     <link rel="stylesheet" href="{% static 'css/add.css' %}">
   <link rel="stylesheet" href="styles.css">
- 
+  <style>
+    body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+header {
+  background-color: #0066cc;
+  color: white;
+  padding: 10px 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+}
+
+.hero h1 {
+  margin-bottom: 10px;
+  font-size: 36px;
+  color: #0066cc;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #555;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.option {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.option:hover {
+  transform: translateY(-5px);
+}
+
+.option img {
+  max-width: 100px;
+  margin-bottom: 10px;
+}
+
+footer {
+  background-color: #0066cc;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+  </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="{% url 'home' %}"><div class="logo">Instabill</div></a>
-        <a href="{% url 'logout_page' %}"><button class="logout-btn">Logout</button></a>
-    </div>
+  <header>
+    <nav>
+      <div class="logo">BrandLogo</div>
+      <ul class="nav-links">
+        <li><a href="#buyer">Buyer</a></li>
+        <li><a href="#seller">Seller</a></li>
+        <li><a href="#item">Item</a></li>
+        <li><a href="#invoice">Invoice</a></li>
+        <li><a href="#reports">Reports</a></li>
+        <li><a href="#settings">Settings</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
     <section class="hero">
       <h1>Welcome to Our Service</h1>
       <p>Your professional tagline goes here.</p>
@@ -52,5 +157,9 @@
         <p>Details about settings.</p>
       </div>
     </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 BrandName. All rights reserved.</p>
+  </footer>
 </body>
 </html>
