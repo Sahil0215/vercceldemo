@@ -77,7 +77,11 @@ def logout_page(request):
     return redirect('/')
 
 def demo(request):
-    return render(request,"demo.html")
+    items=item.objects.all()
+    if len(items)==0:
+        messages.info(request, 'No item Found')
+        return render(request, "manage_item.html")
+    return render(request, "demo.html", {'items':items})
 
 @login_required(login_url="/login_page/")
 def home(request):
