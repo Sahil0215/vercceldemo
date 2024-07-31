@@ -40,7 +40,8 @@ h2 {
 }
 
 table {
-  margin:10%;
+  padding-left:15%;
+  padding-right:15%;
   width: 100%; 
   table-layout: fixed; 
   border-collapse: collapse;
