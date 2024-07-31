@@ -40,21 +40,24 @@ h2 {
 }
 
 table {
-  width: 100%; /* Fix the width of the table */
-  table-layout: fixed; /* Ensures that the table uses fixed layout */
-  border-collapse: collapse; /* Ensures borders are merged */
+  width: 100%; 
+  table-layout: fixed; 
+  border-collapse: collapse;
 }
+
 th, td {
-  word-wrap: break-word; /* Allows content to wrap within cells */
-  padding: 8px; /* Adds some padding for readability */
-  border: 2px solid black; /* Ensures all borders are visible */
+  word-wrap: break-word; 
+  padding: 8px;
+  border: 2px solid black; 
 }
+
 th {
-  background-color: #f2f2f2; /* Adds a background color to headers */
+  background-color: #f2f2f2;
 }
 
 
 .submit-btn {
+  align-self: center;
   width: 100%;
   padding: 0.75rem;
   background-color: #28a745;
