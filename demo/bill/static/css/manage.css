@@ -32,19 +32,13 @@ body, html {
 .navbar .logout-btn:hover {
   background-color: #0056b3;
 }
-.container {
-  width: 100%;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
-.container h2 {
+
+h2 {
   margin-bottom: 1.5rem;
   color: #333;
   text-align: center;
 }
+
 table {
   width: 100%; /* Fix the width of the table */
   table-layout: fixed; /* Ensures that the table uses fixed layout */
